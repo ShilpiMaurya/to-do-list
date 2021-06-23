@@ -1,7 +1,9 @@
-import styled from "styled-components";
-
-const Container = styled.div``;
+import ToDoList from "../components/toDoList";
 
 export default function Home() {
-  return <Container></Container>;
+  return (
+    <>
+      <ToDoList></ToDoList>
+    </>
+  );
 }
