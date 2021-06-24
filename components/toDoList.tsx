@@ -7,6 +7,8 @@ import { addItems } from "../actions/index";
 import { useDispatch } from "react-redux";
 const ToDoList = () => {
   const [titleData, setTitleData] = useState("");
+  console.log(titleData, "title data");
+
   const dispatch = useDispatch();
   return (
     <>
