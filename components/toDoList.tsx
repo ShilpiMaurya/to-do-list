@@ -12,7 +12,7 @@ const ToDoList = () => {
     <>
       <TableHead>
         <TableRow>
-          <TableCell>Task's title</TableCell>
+          <TableCell>Task title</TableCell>
           <TableCell>Description</TableCell>
           <TableCell>Person responsible</TableCell>
           <TableCell>
@@ -65,7 +65,12 @@ const ToDoList = () => {
           <input type="text" placeholder="priority" />
         </TableCell>
         <TableCell>
-          <button onClick={() => dispatch(addItems(titleData))}>Add</button>
+          <button
+            // @ts-ignore
+            onClick={() => dispatch(addItems(titleData), setTitleData(""))}
+          >
+            Add
+          </button>
         </TableCell>
       </TableRow>
     </>
