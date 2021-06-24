@@ -1,4 +1,4 @@
-import ToDoList from "../components/ToDoList";
+import ToDoList from "../components/ToDoListItems";
 import styled from "styled-components";
 
 const Container = styled.div`
