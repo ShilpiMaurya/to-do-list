@@ -1,80 +1,51 @@
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
 import { useState } from "react";
-import { addItems } from "../actions/index";
-import { useDispatch } from "react-redux";
+import { addItems, deleteItems, removeAll } from "../actions/index";
+import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
+
+type Item = {
+  id: number;
+  data: string;
+};
+
+const DisplayBox = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 const ToDoList = () => {
   const [titleData, setTitleData] = useState("");
-  console.log(titleData, "title data");
-
+  // @ts-ignore
+  const list = useSelector(state => state.todoReducers.list);
   const dispatch = useDispatch();
+
   return (
     <>
-      <TableHead>
-        <TableRow>
-          <TableCell>Task title</TableCell>
-          <TableCell>Description</TableCell>
-          <TableCell>Person responsible</TableCell>
-          <TableCell>
-            <TableSortLabel active={true} direction={"desc"}>
-              Start date
-            </TableSortLabel>
-          </TableCell>
-          <TableCell>
-            <TableSortLabel active={true} direction={"desc"}>
-              End date
-            </TableSortLabel>
-          </TableCell>
-          <TableCell>
-            <TableSortLabel active={true} direction={"desc"}>
-              Status
-            </TableSortLabel>
-          </TableCell>
-          <TableCell>
-            <TableSortLabel active={true} direction={"desc"}>
-              Priority
-            </TableSortLabel>
-          </TableCell>
-        </TableRow>
-      </TableHead>
-      <TableRow>
-        <TableCell>
-          <input
-            type="text"
-            placeholder="title"
-            value={titleData}
-            onChange={event => setTitleData(event.target.value)}
-          />
-        </TableCell>
-        <TableCell>
-          <input type="text" placeholder="description" />
-        </TableCell>
-        <TableCell>
-          <input type="text" placeholder="person responsible" />
-        </TableCell>
-        <TableCell>
-          <input type="text" placeholder="start date" />
-        </TableCell>
-        <TableCell>
-          <input type="text" placeholder="end date" />
-        </TableCell>
-        <TableCell>
-          <input type="text" placeholder="status" />
-        </TableCell>
-        <TableCell>
-          <input type="text" placeholder="priority" />
-        </TableCell>
-        <TableCell>
-          <button
-            // @ts-ignore
-            onClick={() => dispatch(addItems(titleData), setTitleData(""))}
-          >
-            Add
-          </button>
-        </TableCell>
-      </TableRow>
+      <input
+        type="text"
+        placeholder="Add items..."
+        value={titleData}
+        onChange={event => setTitleData(event.target.value)}
+      />
+      <button
+        // @ts-ignore
+        onClick={() => dispatch(addItems(titleData), setTitleData(""))}
+      >
+        Add
+      </button>
+      <div>
+        {list.map((elem: Item) => {
+          return (
+            <DisplayBox key={elem.id}>
+              <div>{elem.data}</div>
+              <button onClick={() => dispatch(deleteItems(elem.id))}>
+                Delete
+              </button>
+            </DisplayBox>
+          );
+        })}
+      </div>
+      <button onClick={() => dispatch(removeAll())}>Remove all</button>
     </>
   );
 };

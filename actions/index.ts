@@ -7,3 +7,18 @@ export const addItems = (data: string) => {
     }
   };
 };
+
+export const deleteItems = (id: number) => {
+  return {
+    type: "ITEM_DELETED",
+    payload: {
+      id
+    }
+  };
+};
+
+export const removeAll = () => {
+  return {
+    type: "REMOVE_ALL"
+  };
+};
