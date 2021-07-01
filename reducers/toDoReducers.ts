@@ -4,7 +4,14 @@ const initialData = {
 
 type Action = {
   type: string;
-  payload: { id: number; data: string };
+  payload: {
+    id: number;
+    data1: string;
+    data2: string;
+    data3: string;
+    data4: string;
+    data5: string;
+  };
 };
 
 type Item = {
@@ -15,14 +22,18 @@ type Item = {
 const toDoReducers = (state = initialData, action: Action) => {
   switch (action.type) {
     case "ITEM_ADDED":
-      const { id, data } = action.payload;
+      const { id, data1, data2, data3, data4, data5 } = action.payload;
       return {
         ...state,
         list: [
           ...state.list,
           {
             id: id,
-            data: data
+            data1: data1,
+            data2: data2,
+            data3: data3,
+            data4: data4,
+            data5: data5
           }
         ]
       };
