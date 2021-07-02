@@ -63,7 +63,6 @@ const ToDoList = () => {
       <InputData />
       <InputDisplay>
         {list.map((element: Item) => {
-          console.log(element, "element");
           return (
             <InputDisplayItems key={element.id}>
               <H3Box>

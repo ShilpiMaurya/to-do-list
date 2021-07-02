@@ -17,8 +17,8 @@ const InputContainer = styled.div`
 const InputData = () => {
   const dispatch = useDispatch();
   const [taskTitle, setTaskTitle] = useState("");
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [priority, setPriority] = useState("");
   const [status, setStatus] = useState("");
 
@@ -35,6 +35,7 @@ const InputData = () => {
       <InputContainer>
         <DatePicker
           selected={startDate}
+          // @ts-ignore
           onChange={date => setStartDate(date)}
           placeholderText="Start date"
         />
@@ -42,8 +43,9 @@ const InputData = () => {
       <InputContainer>
         <DatePicker
           selected={endDate}
+          // @ts-ignore
           onChange={date => setEndDate(date)}
-          placeholderText="Start date"
+          placeholderText="End date"
         />
       </InputContainer>
       <InputContainer>
@@ -69,8 +71,8 @@ const InputData = () => {
               addItems(taskTitle, startDate, endDate, priority, status),
               // @ts-ignore
               setTaskTitle(""),
-              setStartDate(""),
-              setEndDate(""),
+              setStartDate(null),
+              setEndDate(null),
               setPriority(""),
               setStatus("")
             )
