@@ -7,8 +7,8 @@ type Action = {
   payload: {
     id: number;
     data1: string;
-    data2: string;
-    data3: string;
+    data2: string | number;
+    data3: string | number;
     data4: string;
     data5: string;
   };

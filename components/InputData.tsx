@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import { addItems } from "../actions/index";
 import { useDispatch } from "react-redux";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const InputDataBox = styled.div`
   display: flex;
@@ -15,8 +17,8 @@ const InputContainer = styled.div`
 const InputData = () => {
   const dispatch = useDispatch();
   const [taskTitle, setTaskTitle] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const [priority, setPriority] = useState("");
   const [status, setStatus] = useState("");
 
@@ -31,19 +33,17 @@ const InputData = () => {
         />
       </InputContainer>
       <InputContainer>
-        <input
-          type="text"
-          placeholder="Start date"
-          value={startDate}
-          onChange={event => setStartDate(event.target.value)}
+        <DatePicker
+          selected={startDate}
+          onChange={date => setStartDate(date)}
+          placeholderText="Start date"
         />
       </InputContainer>
       <InputContainer>
-        <input
-          type="text"
-          placeholder="End date"
-          value={endDate}
-          onChange={event => setEndDate(event.target.value)}
+        <DatePicker
+          selected={endDate}
+          onChange={date => setEndDate(date)}
+          placeholderText="Start date"
         />
       </InputContainer>
       <InputContainer>
@@ -65,7 +65,15 @@ const InputData = () => {
       <InputContainer>
         <button
           onClick={() =>
-            dispatch(addItems(taskTitle, startDate, endDate, priority, status))
+            dispatch(
+              addItems(taskTitle, startDate, endDate, priority, status),
+              // @ts-ignore
+              setTaskTitle(""),
+              setStartDate(""),
+              setEndDate(""),
+              setPriority(""),
+              setStatus("")
+            )
           }
           style={{ color: "grey" }}
         >
