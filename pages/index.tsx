@@ -5,15 +5,35 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 60px;
-  background-color: #575b71;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  background: linear-gradient(45deg, #fc446b, #3f5efb);
+  height: 100vh;
+  width: 100vw;
+`;
+
+const Box = styled.div`
+  height: 70vh;
+  width: 70vw;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  box-shawdow: 10px 10px -20px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding-left: 30px;
+  padding-right: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default function Home() {
   return (
     <Container>
-      <ToDoListItems />
+      <Box>
+        <ToDoListItems />
+      </Box>
     </Container>
   );
 }

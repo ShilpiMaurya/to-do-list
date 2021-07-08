@@ -10,7 +10,7 @@ const ToDoListItemsBox = styled.div`
 `;
 
 const InputDisplay = styled.div`
-  padding-top: 30px;
+  padding-top: 10px;
 `;
 
 const InputDisplayItems = styled.div`
@@ -19,20 +19,30 @@ const InputDisplayItems = styled.div`
 `;
 
 const H3Box = styled.div`
-  padding-right: 15px;
-  padding-top: 20px;
+  padding-top: 10px;
+  padding-right: 8px;
+  padding-left: 8px;
   text-align: center;
 `;
 
 const H3 = styled.div`
-  width: 153px;
-  background: #8184a1;
-  color: white;
-  border-radius: 2px;
+  background: transparent;
+  width: 150px;
+  padding: 0.5em;
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5000px;
+  backdrop-filter: blur(5px);
+  box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-weight: 500;
+  outline: none;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 `;
 
 const ButtonBox1 = styled.div`
-  padding-top: 20px;
+  padding-top: 10px;
   padding-left: 5px;
 `;
 
@@ -45,11 +55,11 @@ const ButtonBox2 = styled.div`
 
 type Item = {
   id: number;
-  data1: string;
-  data2: string | number;
-  data3: string | number;
-  data4: string;
-  data5: string;
+  taskTitleData: string;
+  startDateData: string | number;
+  endDateData: string | number;
+  priorityData: string;
+  statusData: string;
 };
 
 const ToDoList = () => {
@@ -66,26 +76,24 @@ const ToDoList = () => {
           return (
             <InputDisplayItems key={element.id}>
               <H3Box>
-                <H3>{element.data1}</H3>
+                <H3>{element.taskTitleData}</H3>
               </H3Box>
               <H3Box>
-                <H3>{element.data2.toString()}</H3>
+                <H3>{element.startDateData.toLocaleDateString()}</H3>
               </H3Box>
               <H3Box>
-                <H3>{element.data3.toString()}</H3>
+                <H3>{element.endDateData.toLocaleDateString()}</H3>
               </H3Box>
               <H3Box>
-                <H3>{element.data4}</H3>
+                <H3>{element.priorityData}</H3>
               </H3Box>
               <H3Box>
-                <H3>{element.data5}</H3>
+                <H3>{element.statusData}</H3>
               </H3Box>
               <ButtonBox1>
                 <button
                   onClick={() => dispatch(deleteItems(element.id))}
-                  style={{
-                    color: "grey"
-                  }}
+                  style={{ padding: ".7em" }}
                 >
                   -
                 </button>
@@ -98,7 +106,6 @@ const ToDoList = () => {
         <button
           onClick={() => dispatch(removeAll())}
           style={{
-            color: "#575b71",
             fontSize: "16px"
           }}
         >

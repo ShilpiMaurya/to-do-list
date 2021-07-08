@@ -11,7 +11,9 @@ const InputDataBox = styled.div`
 `;
 
 const InputContainer = styled.div`
-  padding-right: 15px;
+  padding-right: 8px;
+  padding-left: 8px;
+  padding-bottom: 10px;
 `;
 
 const InputData = () => {
@@ -38,6 +40,8 @@ const InputData = () => {
           // @ts-ignore
           onChange={date => setStartDate(date)}
           placeholderText="Start date"
+          dateFormat="dd/MM/yyyy"
+          minDate={new Date()}
         />
       </InputContainer>
       <InputContainer>
@@ -46,6 +50,8 @@ const InputData = () => {
           // @ts-ignore
           onChange={date => setEndDate(date)}
           placeholderText="End date"
+          dateFormat="dd/MM/yyyy"
+          minDate={new Date()}
         />
       </InputContainer>
       <InputContainer>
@@ -54,7 +60,13 @@ const InputData = () => {
           placeholder="Priority"
           value={priority}
           onChange={event => setPriority(event.target.value)}
+          list="priority"
         />
+        <datalist id="priority">
+          <option value="High" />
+          <option value="Medium" />
+          <option value="Low" />
+        </datalist>
       </InputContainer>
       <InputContainer>
         <input
@@ -62,7 +74,13 @@ const InputData = () => {
           placeholder="Status"
           value={status}
           onChange={event => setStatus(event.target.value)}
+          list="status"
         />
+        <datalist id="status">
+          <option value="To Do" />
+          <option value="Doing" />
+          <option value="Done" />
+        </datalist>
       </InputContainer>
       <InputContainer>
         <button
@@ -77,7 +95,7 @@ const InputData = () => {
               setStatus("")
             )
           }
-          style={{ color: "grey" }}
+          style={{ padding: ".7em" }}
         >
           +
         </button>
