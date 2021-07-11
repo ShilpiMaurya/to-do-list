@@ -11,6 +11,7 @@ const ToDoListItemsBox = styled.div`
 
 const InputDisplay = styled.div`
   padding-top: 10px;
+  overflow: auto;
 `;
 
 const InputDisplayItems = styled.div`
@@ -56,8 +57,8 @@ const ButtonBox2 = styled.div`
 type Item = {
   id: number;
   taskTitleData: string;
-  startDateData: string | number;
-  endDateData: string | number;
+  startDateData: string;
+  endDateData: string;
   priorityData: string;
   statusData: string;
 };
@@ -79,10 +80,10 @@ const ToDoList = () => {
                 <H3>{element.taskTitleData}</H3>
               </H3Box>
               <H3Box>
-                <H3>{element.startDateData.toLocaleDateString()}</H3>
+                <H3>{element.startDateData.toDateString()}</H3>
               </H3Box>
               <H3Box>
-                <H3>{element.endDateData.toLocaleDateString()}</H3>
+                <H3>{element.endDateData.toDateString()}</H3>
               </H3Box>
               <H3Box>
                 <H3>{element.priorityData}</H3>
