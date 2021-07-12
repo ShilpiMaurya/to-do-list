@@ -28,8 +28,8 @@ const InputData = () => {
   const [priority, setPriority] = useState("");
   const [status, setStatus] = useState("");
   const [taskTitleErrorMessage, setTaskTitleErrorMessage] = useState("");
-  const [startDateMessage, setStartDateMessage] = useState("");
-  const [endDateMessage, setEndDateMessage] = useState("");
+  const [startDateErrorMessage, setStartDateErrorMessage] = useState("");
+  const [endDateErrorMessage, setEndDateErrorMessage] = useState("");
   const [priorityErrorMessage, setPriorityErrorMessage] = useState("");
   const [statusErrorMessage, setStatusErrorMessage] = useState("");
   return (
@@ -50,7 +50,9 @@ const InputData = () => {
               }
             }}
           />
-          <ErrorMessage>{taskTitleErrorMessage}</ErrorMessage>
+          {!!taskTitleErrorMessage && (
+            <ErrorMessage>{taskTitleErrorMessage}</ErrorMessage>
+          )}
         </InputContainer>
 
         <InputContainer>
@@ -63,13 +65,15 @@ const InputData = () => {
             onBlur={event => {
               const value = event.target.value;
               if (!value.length) {
-                setStartDateMessage("Please select valid date");
+                setStartDateErrorMessage("Please select valid date");
               } else {
-                setStartDateMessage("");
+                setStartDateErrorMessage("");
               }
             }}
           />
-          <ErrorMessage>{startDateMessage}</ErrorMessage>
+          {!!startDateErrorMessage && (
+            <ErrorMessage>{startDateErrorMessage}</ErrorMessage>
+          )}
         </InputContainer>
 
         <InputContainer>
@@ -82,13 +86,15 @@ const InputData = () => {
             onBlur={event => {
               const value = event.target.value;
               if (!value.length) {
-                setEndDateMessage("Please select valid date");
+                setEndDateErrorMessage("Please select valid date");
               } else {
-                setEndDateMessage("");
+                setEndDateErrorMessage("");
               }
             }}
           />
-          <ErrorMessage>{endDateMessage}</ErrorMessage>
+          {!!endDateErrorMessage && (
+            <ErrorMessage>{endDateErrorMessage}</ErrorMessage>
+          )}
         </InputContainer>
 
         <InputContainer>
@@ -112,7 +118,9 @@ const InputData = () => {
             <option value="Medium" />
             <option value="Low" />
           </datalist>
-          <ErrorMessage>{priorityErrorMessage}</ErrorMessage>
+          {!!priorityErrorMessage && (
+            <ErrorMessage>{priorityErrorMessage}</ErrorMessage>
+          )}
         </InputContainer>
 
         <InputContainer>
@@ -136,7 +144,9 @@ const InputData = () => {
             <option value="Doing" />
             <option value="Done" />
           </datalist>
-          <ErrorMessage>{statusErrorMessage}</ErrorMessage>
+          {!!statusErrorMessage && (
+            <ErrorMessage>{statusErrorMessage}</ErrorMessage>
+          )}
         </InputContainer>
 
         <InputContainer>
@@ -144,7 +154,13 @@ const InputData = () => {
             onClick={() => {
               if (taskTitle && startDate && endDate && priority && status) {
                 dispatch(
-                  addItems(taskTitle, startDate, endDate, priority, status)
+                  addItems(
+                    taskTitle,
+                    startDate.toDateString(),
+                    endDate.toDateString(),
+                    priority,
+                    status
+                  )
                 );
                 setTaskTitle(""),
                   setStartDate(null),

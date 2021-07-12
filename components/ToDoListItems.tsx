@@ -1,5 +1,5 @@
 import { deleteItems, removeAll } from "../actions/index";
-import { useSelector, useDispatch } from "react-redux";
+import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Heading from "./Heading";
 import InputData from "./InputData";
@@ -64,8 +64,7 @@ type Item = {
 };
 
 const ToDoList = () => {
-  // @ts-ignore
-  const list = useSelector(state => state.todoReducers.list);
+  const list = useSelector((state: RootStateOrAny) => state.todoReducers.list);
   const dispatch = useDispatch();
 
   return (
@@ -80,10 +79,10 @@ const ToDoList = () => {
                 <H3>{element.taskTitleData}</H3>
               </H3Box>
               <H3Box>
-                <H3>{element.startDateData.toDateString()}</H3>
+                <H3>{element.startDateData}</H3>
               </H3Box>
               <H3Box>
-                <H3>{element.endDateData.toDateString()}</H3>
+                <H3>{element.endDateData}</H3>
               </H3Box>
               <H3Box>
                 <H3>{element.priorityData}</H3>
