@@ -13,11 +13,11 @@ const Container = styled.div`
 `;
 
 const Box = styled.div`
-  height: 70vh;
-  width: 70vw;
+  height: 70%;
+  width: 80%;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 20px;
-  box-shawdow: 10px 10px -20px rgba(0, 0, 0, 0.1);
+  box-shadow: 10px 10px -20px rgba(0, 0, 0, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   border-left: 1px solid rgba(255, 255, 255, 0.2);
   padding-left: 30px;

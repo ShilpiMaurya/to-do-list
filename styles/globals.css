@@ -14,7 +14,7 @@ a {
   box-sizing: border-box;
 }
 
-input {
+/* input {
   background: transparent;
   width: 150px;
   padding: 1em;
@@ -46,7 +46,7 @@ input:focus {
   font-weight: 400;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
   opacity: 0.8;
-}
+} */
 
 button {
   background: transparent;
