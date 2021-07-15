@@ -1,5 +1,6 @@
 export const addItems = (
   taskTitleData: string,
+  descriptionData: string,
   startDateData: string,
   endDateData: string,
   priorityData: string,
@@ -10,6 +11,7 @@ export const addItems = (
     payload: {
       id: new Date().getTime().toString(),
       taskTitleData: taskTitleData,
+      descriptionData: descriptionData,
       startDateData: startDateData,
       endDateData: endDateData,
       priorityData: priorityData,

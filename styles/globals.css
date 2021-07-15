@@ -30,8 +30,8 @@ a {
   transition: all 0.2s ease-in-out;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-}
-input:hover {
+} */
+/* input:hover {
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
 }
@@ -39,14 +39,22 @@ input:hover {
 input:focus {
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
-}
+} */
 
-::placeholder {
+/* ::placeholder {
   color: #fff;
   font-weight: 400;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
   opacity: 0.8;
 } */
+
+/* input:hover {
+  box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
+} */
+
+/* input:focus {
+  box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
+}  */
 
 button {
   background: transparent;

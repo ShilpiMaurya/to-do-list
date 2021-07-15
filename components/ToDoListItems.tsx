@@ -59,6 +59,7 @@ const ButtonBox2 = styled.div`
 type Item = {
   id: number;
   taskTitleData: string;
+  descriptionData: string;
   startDateData: string;
   endDateData: string;
   priorityData: string;
@@ -79,6 +80,9 @@ const ToDoList = () => {
             <InputDisplayItems key={element.id}>
               <H3Box>
                 <H3>{element.taskTitleData}</H3>
+              </H3Box>
+              <H3Box>
+                <H3>{element.descriptionData}</H3>
               </H3Box>
               <H3Box>
                 <H3>{element.startDateData}</H3>

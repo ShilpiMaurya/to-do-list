@@ -7,6 +7,7 @@ type Action = {
   payload: {
     id: number;
     taskTitleData: string;
+    descriptionData: string;
     startDateData: string;
     endDateData: string;
     priorityData: string;
@@ -25,6 +26,7 @@ const toDoReducers = (state = initialData, action: Action) => {
       const {
         id,
         taskTitleData,
+        descriptionData,
         startDateData,
         endDateData,
         priorityData,
@@ -37,6 +39,7 @@ const toDoReducers = (state = initialData, action: Action) => {
           {
             id: id,
             taskTitleData: taskTitleData,
+            descriptionData: descriptionData,
             startDateData: startDateData,
             endDateData: endDateData,
             priorityData: priorityData,

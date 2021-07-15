@@ -14,7 +14,7 @@ const Container = styled.div`
 
 const Box = styled.div`
   height: 70%;
-  width: 80%;
+  width: 60%;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   box-shadow: 10px 10px -20px rgba(0, 0, 0, 0.1);
