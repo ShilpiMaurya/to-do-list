@@ -3,6 +3,12 @@ import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Heading from "./Heading";
 import InputData from "./InputData";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const ToDoListItemsBox = styled.div`
   display: flex;
@@ -11,49 +17,16 @@ const ToDoListItemsBox = styled.div`
   height: 100%;
 `;
 
-const InputDisplay = styled.div`
-  padding-top: 10px;
-  overflow: auto;
-`;
-
-const InputDisplayItems = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const H3Box = styled.div`
-  padding-top: 10px;
-  padding-right: 8px;
-  padding-left: 8px;
-  text-align: center;
-`;
-
-const H3 = styled.div`
-  background: transparent;
-  width: 150px;
-  padding: 0.5em;
-  border: none;
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 5000px;
-  backdrop-filter: blur(5px);
-  box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.2);
-  color: #fff;
-  font-weight: 500;
-  outline: none;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-`;
-
-const ButtonBox1 = styled.div`
-  padding-top: 10px;
-  padding-left: 5px;
-`;
-
 const ButtonBox2 = styled.div`
   display: flex;
   flex-direction: row;
-  padding-top: 50px;
+  padding-top: 25px;
+  padding-bottom: 25px;
   justify-content: center;
+`;
+
+const TableContainer = styled.div`
+  overflow: auto;
 `;
 
 type Item = {
@@ -74,49 +47,139 @@ const ToDoList = () => {
     <ToDoListItemsBox>
       <Heading />
       <InputData />
-      <InputDisplay>
-        {list.map((element: Item) => {
-          return (
-            <InputDisplayItems key={element.id}>
-              <H3Box>
-                <H3>{element.taskTitleData}</H3>
-              </H3Box>
-              <H3Box>
-                <H3>{element.descriptionData}</H3>
-              </H3Box>
-              <H3Box>
-                <H3>{element.startDateData}</H3>
-              </H3Box>
-              <H3Box>
-                <H3>{element.endDateData}</H3>
-              </H3Box>
-              <H3Box>
-                <H3>{element.priorityData}</H3>
-              </H3Box>
-              <H3Box>
-                <H3>{element.statusData}</H3>
-              </H3Box>
-              <ButtonBox1>
-                <button
-                  onClick={() => dispatch(deleteItems(element.id))}
-                  style={{ padding: ".7em" }}
-                >
-                  -
-                </button>
-              </ButtonBox1>
-            </InputDisplayItems>
-          );
-        })}
-      </InputDisplay>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell
+                style={{
+                  color: "white",
+                  padding: "10px 5px",
+                  fontSize: "18px"
+                }}
+              >
+                Task
+              </TableCell>
+              <TableCell
+                style={{
+                  color: "white",
+                  padding: "10px 5px",
+                  fontSize: "18px"
+                }}
+              >
+                Description
+              </TableCell>
+              <TableCell
+                style={{
+                  color: "white",
+                  padding: "10px 5px",
+                  fontSize: "18px"
+                }}
+              >
+                Start date
+              </TableCell>
+              <TableCell
+                style={{
+                  color: "white",
+                  padding: "10px 5px",
+                  fontSize: "18px"
+                }}
+              >
+                End date
+              </TableCell>
+              <TableCell
+                style={{
+                  color: "white",
+                  padding: "10px 5px",
+                  fontSize: "18px"
+                }}
+              >
+                Priority
+              </TableCell>
+              <TableCell
+                style={{
+                  color: "white",
+                  padding: "10px 5px",
+                  fontSize: "18px"
+                }}
+              >
+                Status
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          {list.map((element: Item) => {
+            return (
+              <>
+                <TableBody key={element.id}>
+                  <TableRow>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.taskTitleData}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.descriptionData}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.startDateData}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.endDateData}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.priorityData}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.statusData}
+                    </TableCell>
+                    <DeleteIcon
+                      style={{
+                        fontSize: "30px",
+                        color: "white",
+                        cursor: "pointer",
+                        marginTop: "10px",
+                        marginLeft: "5px"
+                      }}
+                      onClick={() => dispatch(deleteItems(element.id))}
+                    />
+                  </TableRow>
+                </TableBody>
+              </>
+            );
+          })}
+        </Table>
+      </TableContainer>
+
       <ButtonBox2>
-        <button
-          onClick={() => dispatch(removeAll())}
-          style={{
-            fontSize: "16px"
-          }}
-        >
-          Remove list
-        </button>
+        <button onClick={() => dispatch(removeAll())}>Remove List</button>
       </ButtonBox2>
     </ToDoListItemsBox>
   );

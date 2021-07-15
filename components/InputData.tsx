@@ -42,7 +42,12 @@ const ModalContent = styled.div`
   width: 100%;
 `;
 
-const ModalButtonContainer = styled.div``;
+const ModalButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  text-align: center;
+`;
 
 const ButtonContainer = styled.div`
   padding-top: 50px;
@@ -96,7 +101,12 @@ const InputData = () => {
   return (
     <>
       <ModalButtonContainer>
-        <button onClick={handleClickOpen}>Create task +</button>
+        <button
+          onClick={handleClickOpen}
+          style={{ marginRight: "30px", marginBottom: "20px" }}
+        >
+          Create New Task +
+        </button>
       </ModalButtonContainer>
       <Dialog
         open={openModal}
@@ -238,10 +248,7 @@ const InputData = () => {
                   onChange={event => setPriority(event.target.value)}
                   onBlur={event => {
                     const input = event.target.value;
-                    if (
-                      input !== ("High" || "Medium" || "Low") ||
-                      !input.length
-                    ) {
+                    if (!input.length) {
                       setPriorityErrorMessage("Please select the valid option");
                     } else {
                       setPriorityErrorMessage("");
@@ -275,10 +282,7 @@ const InputData = () => {
                   onChange={event => setStatus(event.target.value)}
                   onBlur={event => {
                     const input = event.target.value;
-                    if (
-                      input !== ("To Do" || "Doing" || "Done") ||
-                      !input.length
-                    ) {
+                    if (!input.length) {
                       setStatusErrorMessage("Please select the valid option");
                     } else {
                       setStatusErrorMessage("");
