@@ -18,16 +18,24 @@ const ModalTitleBox = styled.div`
   color: #3f51b5;
   font-size: 30px;
   font-weight: 100;
+  padding-bottom: 10px;
 `;
 
 const DateBox = styled.div`
   display: flex;
   flex-direction: row;
   padding-top: 25px;
+  @media (max-width: 430px) {
+    flex-direction: column;
+    padding-top: 10px;
+  }
 `;
 
 const DateContainer = styled.div`
   padding-right: 20px;
+  @media (max-width: 430px) {
+    padding-bottom: 10px;
+  }
 `;
 
 const ModalContent = styled.div`
@@ -37,7 +45,7 @@ const ModalContent = styled.div`
 const ModalButtonContainer = styled.div``;
 
 const ButtonContainer = styled.div`
-  padding-top: 60px;
+  padding-top: 50px;
 `;
 
 const AssigneeBox = styled.div`
@@ -163,6 +171,7 @@ const InputData = () => {
                 </label>
                 <input
                   type="date"
+                  required
                   value={startDate}
                   onChange={event => setStartDate(event.target.value)}
                   onBlur={event => {
@@ -192,6 +201,8 @@ const InputData = () => {
                 </label>
                 <input
                   type="date"
+                  min={startDate}
+                  required
                   value={endDate}
                   onChange={event => setEndDate(event.target.value)}
                   onBlur={event => {
@@ -289,7 +300,7 @@ const InputData = () => {
             <DialogActions>
               <ButtonContainer>
                 <Button
-                  style={{ marginRight: "20px" }}
+                  style={{ marginLeft: "20px", marginBottom: "10px" }}
                   onClick={() => {
                     if (
                       taskTitle &&
@@ -318,11 +329,22 @@ const InputData = () => {
                   }}
                   color="primary"
                   variant="contained"
+                  disabled={
+                    !(
+                      taskTitle &&
+                      description &&
+                      startDate &&
+                      endDate &&
+                      status &&
+                      priority
+                    )
+                  }
                 >
                   add task
                 </Button>
 
                 <Button
+                  style={{ marginLeft: "20px", marginBottom: "10px" }}
                   onClick={handleClose}
                   color="primary"
                   variant="contained"
