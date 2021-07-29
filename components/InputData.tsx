@@ -98,6 +98,18 @@ const InputData = () => {
     setPriorityErrorMessage("");
     setStatusErrorMessage("");
   };
+
+  const handleButtonClick = () => {
+    if (taskTitle && startDate && endDate && priority && status) {
+      dispatch(
+        addItems(taskTitle, description, startDate, endDate, priority, status)
+      );
+      setTaskTitle(""), setDescription("");
+      setStartDate(""), setEndDate(""), setPriority(""), setStatus("");
+      setOpenModal(false);
+    }
+  };
+
   return (
     <>
       <ModalButtonContainer>
@@ -305,32 +317,6 @@ const InputData = () => {
               <ButtonContainer>
                 <Button
                   style={{ marginLeft: "20px", marginBottom: "10px" }}
-                  onClick={() => {
-                    if (
-                      taskTitle &&
-                      startDate &&
-                      endDate &&
-                      priority &&
-                      status
-                    ) {
-                      dispatch(
-                        addItems(
-                          taskTitle,
-                          description,
-                          startDate,
-                          endDate,
-                          priority,
-                          status
-                        )
-                      );
-                      setTaskTitle(""), setDescription("");
-                      setStartDate(""),
-                        setEndDate(""),
-                        setPriority(""),
-                        setStatus("");
-                      setOpenModal(false);
-                    }
-                  }}
                   color="primary"
                   variant="contained"
                   disabled={
@@ -343,6 +329,7 @@ const InputData = () => {
                       priority
                     )
                   }
+                  onClick={handleButtonClick}
                 >
                   add task
                 </Button>

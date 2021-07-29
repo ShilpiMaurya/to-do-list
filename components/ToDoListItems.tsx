@@ -52,6 +52,7 @@ const ToDoList = () => {
           <TableHead>
             <TableRow>
               <TableCell
+                className="head_element"
                 style={{
                   color: "white",
                   padding: "10px 5px",
@@ -61,6 +62,7 @@ const ToDoList = () => {
                 Task
               </TableCell>
               <TableCell
+                className="head_element"
                 style={{
                   color: "white",
                   padding: "10px 5px",
@@ -70,6 +72,7 @@ const ToDoList = () => {
                 Description
               </TableCell>
               <TableCell
+                className="head_element"
                 style={{
                   color: "white",
                   padding: "10px 5px",
@@ -79,6 +82,7 @@ const ToDoList = () => {
                 Start date
               </TableCell>
               <TableCell
+                className="head_element"
                 style={{
                   color: "white",
                   padding: "10px 5px",
@@ -88,6 +92,7 @@ const ToDoList = () => {
                 End date
               </TableCell>
               <TableCell
+                className="head_element"
                 style={{
                   color: "white",
                   padding: "10px 5px",
@@ -97,6 +102,7 @@ const ToDoList = () => {
                 Priority
               </TableCell>
               <TableCell
+                className="head_element"
                 style={{
                   color: "white",
                   padding: "10px 5px",
@@ -109,70 +115,68 @@ const ToDoList = () => {
           </TableHead>
           {list.map((element: Item) => {
             return (
-              <>
-                <TableBody key={element.id}>
-                  <TableRow>
-                    <TableCell
-                      style={{
-                        color: "white",
-                        padding: "15px 5px"
-                      }}
-                    >
-                      {element.taskTitleData}
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        color: "white",
-                        padding: "15px 5px"
-                      }}
-                    >
-                      {element.descriptionData}
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        color: "white",
-                        padding: "15px 5px"
-                      }}
-                    >
-                      {element.startDateData}
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        color: "white",
-                        padding: "15px 5px"
-                      }}
-                    >
-                      {element.endDateData}
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        color: "white",
-                        padding: "15px 5px"
-                      }}
-                    >
-                      {element.priorityData}
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        color: "white",
-                        padding: "15px 5px"
-                      }}
-                    >
-                      {element.statusData}
-                    </TableCell>
-                    <DeleteIcon
-                      style={{
-                        fontSize: "30px",
-                        color: "white",
-                        cursor: "pointer",
-                        marginTop: "10px",
-                        marginLeft: "5px"
-                      }}
-                      onClick={() => dispatch(deleteItems(element.id))}
-                    />
-                  </TableRow>
-                </TableBody>
-              </>
+              <TableBody key={element.id}>
+                <TableRow>
+                  <TableCell
+                    style={{
+                      color: "white",
+                      padding: "15px 5px"
+                    }}
+                  >
+                    {element.taskTitleData}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: "white",
+                      padding: "15px 5px"
+                    }}
+                  >
+                    {element.descriptionData}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: "white",
+                      padding: "15px 5px"
+                    }}
+                  >
+                    {element.startDateData}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: "white",
+                      padding: "15px 5px"
+                    }}
+                  >
+                    {element.endDateData}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: "white",
+                      padding: "15px 5px"
+                    }}
+                  >
+                    {element.priorityData}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: "white",
+                      padding: "15px 5px"
+                    }}
+                  >
+                    {element.statusData}
+                  </TableCell>
+                  <DeleteIcon
+                    style={{
+                      fontSize: "30px",
+                      color: "white",
+                      cursor: "pointer",
+                      marginTop: "10px",
+                      marginLeft: "5px"
+                    }}
+                    onClick={() => dispatch(deleteItems(element.id))}
+                  />
+                </TableRow>
+              </TableBody>
             );
           })}
         </Table>
