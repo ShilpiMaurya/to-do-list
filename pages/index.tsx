@@ -1,26 +1,39 @@
-import ToDoList from "../components/ToDoListItems";
 import styled from "styled-components";
+import ToDoListItems from "../components/ToDoListItems";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  vertical-align: center;
-  padding: 20px;
-  background-color: #f5f5f5;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  justify-content: center;
+  padding: 60px;
+  background: linear-gradient(45deg, #fc446b, #3f5efb);
+  height: 100vh;
+  width: 100vw;
 `;
 
-const Heading = styled.h1`
-  text-align: center;
-  padding-top: 40px;
+const Box = styled.div`
+  height: 70%;
+  width: 70vw;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  box-shadow: 10px 10px -20px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding-left: 30px;
+  padding-right: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default function Home() {
   return (
     <Container>
-      <Heading>To-do-list</Heading>
-      <ToDoList></ToDoList>
+      <Box>
+        <ToDoListItems />
+      </Box>
     </Container>
   );
 }

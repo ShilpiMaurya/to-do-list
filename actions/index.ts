@@ -1,9 +1,21 @@
-export const addItems = (data: string) => {
+export const addItems = (
+  taskTitleData: string,
+  descriptionData: string,
+  startDateData: string,
+  endDateData: string,
+  priorityData: string,
+  statusData: string
+) => {
   return {
     type: "ITEM_ADDED",
     payload: {
       id: new Date().getTime().toString(),
-      data: data
+      taskTitleData: taskTitleData,
+      descriptionData: descriptionData,
+      startDateData: startDateData,
+      endDateData: endDateData,
+      priorityData: priorityData,
+      statusData: statusData
     }
   };
 };
