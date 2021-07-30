@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@material-ui/icons": "^4.11.2",
+    "firebase": "^8.8.1",
+    "firebase-admin": "^9.11.0",
     "next": "11.0.0",
     "node-fetch": "^2.6.1",
     "react": "17.0.2",
