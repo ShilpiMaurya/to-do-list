@@ -1,5 +1,4 @@
 import firebase from "firebase/app";
-import "firebase/auth";
 import "firebase/firestore";
 
 const clientCredentials = {
@@ -13,7 +12,7 @@ const clientCredentials = {
 };
 
 const initFirebase = () => {
-  if (!firebase.app.length) {
+  if (!firebase.apps.length) {
     firebase.initializeApp(clientCredentials);
   }
 };
