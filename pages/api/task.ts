@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 const admin = require("firebase-admin");
-
-const serviceAccount = require("../../secret.json");
+const serviceAccount = process.env.NEXT_PUBLIC_FIREBASE_SERVICE_ACCOUNT;
 
 if (!admin.apps.length) {
   admin.initializeApp({
@@ -18,8 +17,6 @@ export default async function handler(
 ) {
   const { body, method } = req;
   if (method === "POST") {
-    console.log(req.body, "req_body");
-    console.log(req.method, "req_method");
     const { name, email } = body;
     const docRef = db.collection("tasks").doc("name");
 
