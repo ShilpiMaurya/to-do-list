@@ -4,9 +4,11 @@ const admin = require("firebase-admin");
 const serviceAccount = process.env.NEXT_PUBLIC_FIREBASE_SERVICE_ACCOUNT;
 
 if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-  });
+  if (serviceAccount) {
+    admin.initializeApp({
+      credential: admin.credential.cert(JSON.parse(serviceAccount))
+    });
+  }
 }
 
 const db = admin.firestore();
@@ -24,6 +26,7 @@ export default async function handler(
       name,
       email
     });
+
     res.status(200).send("Successfully created post request");
   } else {
     res.status(500).send("Something is wrong, Please try later");
