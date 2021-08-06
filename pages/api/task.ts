@@ -8,6 +8,8 @@ if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.cert(JSON.parse(serviceAccount))
     });
+  } else {
+    console.error("Cant read or access serviceAccount");
   }
 }
 
@@ -19,12 +21,23 @@ export default async function handler(
 ) {
   const { body, method } = req;
   if (method === "POST") {
-    const { name, email } = body;
-    const docRef = db.collection("tasks").doc("name");
+    const {
+      taskTitle,
+      description,
+      startDate,
+      endDate,
+      status,
+      priority
+    } = body;
+    const docRef = db.collection("tasks").doc("my_tasks");
 
     await docRef.set({
-      name,
-      email
+      taskTitle,
+      description,
+      startDate,
+      endDate,
+      status,
+      priority
     });
 
     res.status(200).send("Successfully created post request");

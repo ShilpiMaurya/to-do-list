@@ -7,6 +7,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import axios from "axios";
 
 const InputDataBox = styled.div`
   display: flex;
@@ -83,6 +84,21 @@ const InputData = () => {
   const [statusErrorMessage, setStatusErrorMessage] = useState("");
   const [openModal, setOpenModal] = useState(false);
 
+  const handleButtonClick = () => {
+    const Url = "http://localhost:3000/api/task";
+    const EntryFields = {
+      taskTitle: taskTitle,
+      description: description,
+      startDate: startDate,
+      endDate: endDate,
+      status: status,
+      priority: priority
+    };
+    axios({ method: "post", url: Url, data: { EntryFields } })
+      .then(data => console.log(data, "data"))
+      .catch(error => console.log(error, "error"));
+  };
+
   const handleClickOpen = () => {
     setOpenModal(true);
   };
@@ -99,16 +115,23 @@ const InputData = () => {
     setStatusErrorMessage("");
   };
 
-  const handleButtonClick = () => {
-    if (taskTitle && startDate && endDate && priority && status) {
-      dispatch(
-        addItems(taskTitle, description, startDate, endDate, priority, status)
-      );
-      setTaskTitle(""), setDescription("");
-      setStartDate(""), setEndDate(""), setPriority(""), setStatus("");
-      setOpenModal(false);
-    }
-  };
+  // const handleButtonClick = () => {
+  //   if (
+  //     taskTitle &&
+  //     description &&
+  //     startDate &&
+  //     endDate &&
+  //     priority &&
+  //     status
+  //   ) {
+  //     dispatch(
+  //       addItems(taskTitle, description, startDate, endDate, priority, status)
+  //     );
+  //     setTaskTitle(""), setDescription("");
+  //     setStartDate(""), setEndDate(""), setPriority(""), setStatus("");
+  //     setOpenModal(false);
+  //   }
+  // };
 
   return (
     <>
