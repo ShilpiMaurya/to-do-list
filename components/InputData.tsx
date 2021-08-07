@@ -85,8 +85,9 @@ const InputData = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const handleButtonClick = () => {
-    const Url = "http://localhost:3000/api/task";
-    const EntryFields = {
+    console.log(taskTitle, "task title");
+    const url = "/api/task";
+    const data = {
       taskTitle: taskTitle,
       description: description,
       startDate: startDate,
@@ -94,9 +95,25 @@ const InputData = () => {
       status: status,
       priority: priority
     };
-    axios({ method: "post", url: Url, data: { EntryFields } })
-      .then(data => console.log(data, "data"))
+    axios({ method: "post", url: url, data })
+      .then(data =>
+        data
+          ? dispatch(
+              addItems(
+                taskTitle,
+                description,
+                startDate,
+                endDate,
+                priority,
+                status
+              )
+            )
+          : "No data provided"
+      )
       .catch(error => console.log(error, "error"));
+    setTaskTitle(""), setDescription("");
+    setStartDate(""), setEndDate(""), setPriority(""), setStatus("");
+    setOpenModal(false);
   };
 
   const handleClickOpen = () => {
@@ -114,24 +131,6 @@ const InputData = () => {
     setPriorityErrorMessage("");
     setStatusErrorMessage("");
   };
-
-  // const handleButtonClick = () => {
-  //   if (
-  //     taskTitle &&
-  //     description &&
-  //     startDate &&
-  //     endDate &&
-  //     priority &&
-  //     status
-  //   ) {
-  //     dispatch(
-  //       addItems(taskTitle, description, startDate, endDate, priority, status)
-  //     );
-  //     setTaskTitle(""), setDescription("");
-  //     setStartDate(""), setEndDate(""), setPriority(""), setStatus("");
-  //     setOpenModal(false);
-  //   }
-  // };
 
   return (
     <>

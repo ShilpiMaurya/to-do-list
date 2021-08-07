@@ -113,9 +113,9 @@ const ToDoList = () => {
               </TableCell>
             </TableRow>
           </TableHead>
-          {list.map((element: Item) => {
+          {list.map((element: Item, index: number) => {
             return (
-              <TableBody key={element.id}>
+              <TableBody key={index}>
                 <TableRow>
                   <TableCell
                     style={{

@@ -29,8 +29,8 @@ export default async function handler(
       status,
       priority
     } = body;
-    const docRef = db.collection("tasks").doc("my_tasks");
 
+    const docRef = db.collection("tasks").doc("my_tasks");
     await docRef.set({
       taskTitle,
       description,
