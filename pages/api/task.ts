@@ -39,7 +39,6 @@ export default async function handler(
       status,
       priority
     });
-
     res.status(200).send("Successfully created post request");
   } else {
     res.status(500).send("Something is wrong, Please try later");

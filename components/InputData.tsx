@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { addItems } from "../actions/index";
+import { postData } from "../actions/index";
 import { useDispatch } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import axios from "axios";
 
 const InputDataBox = styled.div`
   display: flex;
@@ -85,35 +84,14 @@ const InputData = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const handleButtonClick = () => {
-    console.log(taskTitle, "task title");
-    const url = "/api/task";
-    const data = {
-      taskTitle: taskTitle,
-      description: description,
-      startDate: startDate,
-      endDate: endDate,
-      status: status,
-      priority: priority
-    };
-    axios({ method: "post", url: url, data })
-      .then(data =>
-        data
-          ? dispatch(
-              addItems(
-                taskTitle,
-                description,
-                startDate,
-                endDate,
-                priority,
-                status
-              )
-            )
-          : "No data provided"
-      )
-      .catch(error => console.log(error, "error"));
+    if (taskTitle && startDate && endDate && priority && status) {
+      dispatch(
+        postData(taskTitle, description, startDate, endDate, priority, status)
+      );
+    }
+    setOpenModal(false);
     setTaskTitle(""), setDescription("");
     setStartDate(""), setEndDate(""), setPriority(""), setStatus("");
-    setOpenModal(false);
   };
 
   const handleClickOpen = () => {

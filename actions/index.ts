@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const addItems = (
   taskTitleData: string,
   descriptionData: string,
@@ -32,5 +34,43 @@ export const deleteItems = (id: number) => {
 export const removeAll = () => {
   return {
     type: "REMOVE_ALL"
+  };
+};
+
+export const postData = (
+  taskTitle: string,
+  description: string,
+  startDate: string,
+  endDate: string,
+  status: string,
+  priority: string
+) => {
+  return (dispatch: any) => {
+    const url = "/api/task";
+    const data = {
+      taskTitle: taskTitle,
+      description: description,
+      startDate: startDate,
+      endDate: endDate,
+      status: status,
+      priority: priority
+    };
+
+    axios({ method: "post", url: url, data })
+      .then(data =>
+        data
+          ? dispatch(
+              addItems(
+                taskTitle,
+                description,
+                startDate,
+                endDate,
+                priority,
+                status
+              )
+            )
+          : "No data provided"
+      )
+      .catch(error => console.log(error, "error"));
   };
 };
