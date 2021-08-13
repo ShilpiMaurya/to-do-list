@@ -1,5 +1,7 @@
 const initialData = {
-  list: []
+  loading: false,
+  list: [],
+  error: ""
 };
 
 type Action = {
@@ -20,7 +22,7 @@ type Item = {
   data: string;
 };
 
-const toDoReducers = (state = initialData, action: Action) => {
+const toDoReducers = (state = initialData, action: any) => {
   switch (action.type) {
     case "ITEM_ADDED":
       const {
@@ -45,7 +47,9 @@ const toDoReducers = (state = initialData, action: Action) => {
             priorityData: priorityData,
             statusData: statusData
           }
-        ]
+        ],
+        loading: false,
+        error: ""
       };
     case "ITEM_DELETED":
       const newList = state.list.filter((elem: Item) => {
@@ -60,7 +64,17 @@ const toDoReducers = (state = initialData, action: Action) => {
         ...state,
         list: []
       };
-
+    case "POST_DATA_REQUEST":
+      return {
+        ...state,
+        loading: true,
+        error: ""
+      };
+    case "POST_DATA_FAILURE":
+      return {
+        loading: false,
+        error: action.payload
+      };
     default:
       return state;
   }

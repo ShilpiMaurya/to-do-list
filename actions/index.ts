@@ -38,6 +38,19 @@ export const removeAll = () => {
   };
 };
 
+export const postDataRequest = () => {
+  return {
+    type: "POST_DATA_REQUEST"
+  };
+};
+
+export const postDataFailure = (error: string) => {
+  return {
+    type: "POST_DATA_FAILURE",
+    payload: error
+  };
+};
+
 export const postData = (
   taskTitle: string,
   description: string,
@@ -47,6 +60,7 @@ export const postData = (
   priority: string
 ) => {
   return (dispatch: AppDispatch) => {
+    dispatch(postDataRequest());
     const url = "/api/task";
     const data = {
       taskTitle: taskTitle,
@@ -58,20 +72,20 @@ export const postData = (
     };
 
     axios({ method: "post", url: url, data })
-      .then(data =>
-        data
-          ? dispatch(
-              addItems(
-                taskTitle,
-                description,
-                startDate,
-                endDate,
-                priority,
-                status
-              )
+      .then(data => {
+        if (data) {
+          dispatch(
+            addItems(
+              taskTitle,
+              description,
+              startDate,
+              endDate,
+              priority,
+              status
             )
-          : "No data provided"
-      )
-      .catch(error => console.log(error, "error"));
+          );
+        }
+      })
+      .catch(error => dispatch(postDataFailure(error)));
   };
 };
