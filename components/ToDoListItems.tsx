@@ -30,7 +30,7 @@ const TableContainer = styled.div`
 `;
 
 type Item = {
-  id: number;
+  id: string;
   taskTitleData: string;
   descriptionData: string;
   startDateData: string;
