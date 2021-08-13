@@ -5,7 +5,7 @@ const initialData = {
 type Action = {
   type: string;
   payload: {
-    id: number;
+    id: string;
     taskTitleData: string;
     descriptionData: string;
     startDateData: string;
@@ -16,7 +16,7 @@ type Action = {
 };
 
 type Item = {
-  id: number;
+  id: string;
   data: string;
 };
 

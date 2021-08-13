@@ -35,4 +35,3 @@ yarn.lock
 .vercel
 package-lock.json
 
-secret.json

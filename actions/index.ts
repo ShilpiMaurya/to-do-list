@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AppDispatch } from "../store";
 
 export const addItems = (
   taskTitleData: string,
@@ -22,7 +23,7 @@ export const addItems = (
   };
 };
 
-export const deleteItems = (id: number) => {
+export const deleteItems = (id: string) => {
   return {
     type: "ITEM_DELETED",
     payload: {
@@ -45,7 +46,7 @@ export const postData = (
   status: string,
   priority: string
 ) => {
-  return (dispatch: any) => {
+  return (dispatch: AppDispatch) => {
     const url = "/api/task";
     const data = {
       taskTitle: taskTitle,
