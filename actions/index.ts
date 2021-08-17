@@ -86,6 +86,6 @@ export const postData = (
           );
         }
       })
-      .catch(error => dispatch(postDataFailure(error)));
+      .catch(error => dispatch(postDataFailure(error.message)));
   };
 };

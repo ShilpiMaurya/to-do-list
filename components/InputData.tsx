@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { postData } from "../actions/index";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { AppDispatch } from "../store";
 
 const InputDataBox = styled.div`
   display: flex;
@@ -68,7 +69,7 @@ const ErrorMessage = styled.div`
 `;
 
 const InputData = () => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const [taskTitle, setTaskTitle] = useState("");
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");

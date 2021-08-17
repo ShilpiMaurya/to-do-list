@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { AppDispatch, RootState } from "../store";
 
 const ToDoListItemsBox = styled.div`
   display: flex;
@@ -29,6 +30,14 @@ const TableContainer = styled.div`
   overflow: auto;
 `;
 
+const ErrorStateContainer = styled.div`
+  height: 20px;
+`;
+
+const ErrorStateMessage = styled.div`
+  color: red;
+`;
+
 type Item = {
   id: string;
   taskTitleData: string;
@@ -41,12 +50,19 @@ type Item = {
 
 const ToDoList = () => {
   const list = useSelector((state: RootStateOrAny) => state.todoReducers.list);
-  const dispatch = useDispatch();
-
+  const dispatch: AppDispatch = useDispatch();
+  const errorState = useSelector(
+    //@ts-ignore
+    (state: RootState) => state.todoReducers.error
+  );
+  console.log(errorState, "shilpi");
   return (
     <ToDoListItemsBox>
       <Heading />
       <InputData />
+      <ErrorStateContainer>
+        {!!errorState && <ErrorStateMessage>{errorState}</ErrorStateMessage>}
+      </ErrorStateContainer>
       <TableContainer>
         <Table>
           <TableHead>
@@ -181,7 +197,6 @@ const ToDoList = () => {
           })}
         </Table>
       </TableContainer>
-
       <ButtonBox2>
         <button onClick={() => dispatch(removeAll())}>Remove List</button>
       </ButtonBox2>
