@@ -14,6 +14,7 @@ type Action = {
     endDateData: string;
     priorityData: string;
     statusData: string;
+    error: string;
   };
 };
 
@@ -22,7 +23,7 @@ type Item = {
   data: string;
 };
 
-const toDoReducers = (state = initialData, action: any) => {
+const toDoReducers = (state = initialData, action: Action | any) => {
   switch (action.type) {
     case "ITEM_ADDED":
       const {

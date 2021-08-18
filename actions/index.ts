@@ -47,7 +47,7 @@ export const postDataRequest = () => {
 export const postDataFailure = (error: string) => {
   return {
     type: "POST_DATA_FAILURE",
-    payload: error
+    payload: { error }
   };
 };
 

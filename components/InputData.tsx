@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { postData } from "../actions/index";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";

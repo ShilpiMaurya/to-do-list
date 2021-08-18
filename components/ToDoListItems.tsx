@@ -9,7 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { AppDispatch, RootState } from "../store";
+import { AppDispatch } from "../store";
 
 const ToDoListItemsBox = styled.div`
   display: flex;
@@ -52,10 +52,8 @@ const ToDoList = () => {
   const list = useSelector((state: RootStateOrAny) => state.todoReducers.list);
   const dispatch: AppDispatch = useDispatch();
   const errorState = useSelector(
-    //@ts-ignore
-    (state: RootState) => state.todoReducers.error
+    (state: RootStateOrAny) => state.todoReducers.error
   );
-  console.log(errorState, "shilpi");
   return (
     <ToDoListItemsBox>
       <Heading />
