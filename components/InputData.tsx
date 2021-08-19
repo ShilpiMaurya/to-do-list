@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { addItems } from "../actions/index";
+import { postData } from "../actions/index";
 import { useDispatch } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { AppDispatch } from "../store";
 
 const InputDataBox = styled.div`
   display: flex;
@@ -68,7 +69,7 @@ const ErrorMessage = styled.div`
 `;
 
 const InputData = () => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const [taskTitle, setTaskTitle] = useState("");
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -82,6 +83,17 @@ const InputData = () => {
   const [priorityErrorMessage, setPriorityErrorMessage] = useState("");
   const [statusErrorMessage, setStatusErrorMessage] = useState("");
   const [openModal, setOpenModal] = useState(false);
+
+  const handleButtonClick = () => {
+    if (taskTitle && startDate && endDate && priority && status) {
+      dispatch(
+        postData(taskTitle, description, startDate, endDate, priority, status)
+      );
+    }
+    setOpenModal(false);
+    setTaskTitle(""), setDescription("");
+    setStartDate(""), setEndDate(""), setPriority(""), setStatus("");
+  };
 
   const handleClickOpen = () => {
     setOpenModal(true);
@@ -97,17 +109,6 @@ const InputData = () => {
     setDescriptionErrorMessage("");
     setPriorityErrorMessage("");
     setStatusErrorMessage("");
-  };
-
-  const handleButtonClick = () => {
-    if (taskTitle && startDate && endDate && priority && status) {
-      dispatch(
-        addItems(taskTitle, description, startDate, endDate, priority, status)
-      );
-      setTaskTitle(""), setDescription("");
-      setStartDate(""), setEndDate(""), setPriority(""), setStatus("");
-      setOpenModal(false);
-    }
   };
 
   return (
