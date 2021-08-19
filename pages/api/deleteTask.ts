@@ -19,27 +19,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { body, method } = req;
-  if (method === "POST") {
-    const {
-      taskTitle,
-      description,
-      startDate,
-      endDate,
-      status,
-      priority
-    } = body;
-
-    const docRef = db.collection("tasks").doc();
-    await docRef.set({
-      taskTitle,
-      description,
-      startDate,
-      endDate,
-      status,
-      priority
-    });
-    res.status(200).send("Successfully created post request");
+  const { method } = req;
+  if (method === "DELETE") {
+    await db
+      .collection("tasks")
+      .doc()
+      .delete();
+    res.status(200).send("Successfully deleted a document");
   } else {
     res.status(500).send("Something is wrong, Please try later");
   }
