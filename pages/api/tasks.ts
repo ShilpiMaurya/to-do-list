@@ -29,8 +29,8 @@ export default async function handler(
       status,
       priority
     } = body;
-
-    const docRef = db.collection("tasks").doc();
+    const uniqueId = db.collection("tasks").doc().id;
+    const docRef = db.collection("tasks").doc(uniqueId);
     await docRef.set({
       taskTitle,
       description,
@@ -40,6 +40,12 @@ export default async function handler(
       priority
     });
     res.status(200).send("Successfully created post request");
+  } else if (method === "DELETE") {
+    await db
+      .collection("tasks")
+      .doc()
+      .delete();
+    res.status(200).send("Successfully deleted a document");
   } else {
     res.status(500).send("Something is wrong, Please try later");
   }
