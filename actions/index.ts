@@ -93,12 +93,7 @@ export const postData = (
               status
             )
           );
-        }
-      })
-      .then((response: any) => {
-        if (response) {
-          console.log(response.data, "response");
-          dispatch(postDataSuccess(response.data.uniqueId));
+          dispatch(postDataSuccess(data.data.uniqueId));
         }
       })
       .catch(error => dispatch(postDataFailure(error.message)));
