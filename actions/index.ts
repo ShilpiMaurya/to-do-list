@@ -95,15 +95,7 @@ export const postData = (
           );
         }
       })
-      .catch(error => dispatch(postDataFailure(error.message)));
-  };
-};
-
-export const getUniqueId = () => {
-  return (dispatch: AppDispatch) => {
-    axios
-      .get("/api/tasks")
-      .then(response => {
+      .then((response: any) => {
         if (response) {
           console.log(response.data, "response");
           dispatch(postDataSuccess(response.data.uniqueId));
