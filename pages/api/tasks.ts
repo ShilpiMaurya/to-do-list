@@ -14,7 +14,6 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -29,9 +28,7 @@ export default async function handler(
       status,
       priority
     } = body;
-    const uniqueId = db.collection("tasks").doc().id;
-    const docRef = db.collection("tasks").doc(uniqueId);
-    await docRef.set({
+    const docRef = await db.collection("tasks").add({
       taskTitle,
       description,
       startDate,
@@ -39,7 +36,7 @@ export default async function handler(
       status,
       priority
     });
-    res.status(200).send("Successfully created post request");
+    res.status(200).json({ uniqueId: docRef.id });
   } else if (method === "DELETE") {
     await db
       .collection("tasks")

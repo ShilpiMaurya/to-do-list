@@ -1,7 +1,8 @@
 const initialData = {
   loading: false,
   list: [],
-  error: ""
+  error: "",
+  uniqueTaskId: ""
 };
 
 type Action = {
@@ -70,6 +71,11 @@ const toDoReducers = (state = initialData, action: Action | any) => {
         ...state,
         loading: true,
         error: ""
+      };
+    case "POST_DATA_SUCCESS":
+      return {
+        ...state,
+        uniqueTaskId: action.payload
       };
     case "POST_DATA_FAILURE":
       return {

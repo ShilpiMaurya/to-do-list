@@ -44,6 +44,15 @@ export const postDataRequest = () => {
   };
 };
 
+export const postDataSuccess = (uniqueId: string) => {
+  return {
+    type: "POST_DATA_SUCCESS",
+    payload: {
+      uniqueId
+    }
+  };
+};
+
 export const postDataFailure = (error: string) => {
   return {
     type: "POST_DATA_FAILURE",
@@ -61,7 +70,7 @@ export const postData = (
 ) => {
   return (dispatch: AppDispatch) => {
     dispatch(postDataRequest());
-    const url = "/api/task";
+    const url = "/api/tasks";
     const data = {
       taskTitle: taskTitle,
       description: description,
@@ -84,6 +93,20 @@ export const postData = (
               status
             )
           );
+        }
+      })
+      .catch(error => dispatch(postDataFailure(error.message)));
+  };
+};
+
+export const getUniqueId = () => {
+  return (dispatch: AppDispatch) => {
+    axios
+      .get("/api/tasks")
+      .then(response => {
+        if (response) {
+          console.log(response.data, "response");
+          dispatch(postDataSuccess(response.data.uniqueId));
         }
       })
       .catch(error => dispatch(postDataFailure(error.message)));
