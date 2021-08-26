@@ -14,7 +14,6 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -29,9 +28,7 @@ export default async function handler(
       status,
       priority
     } = body;
-
-    const docRef = db.collection("tasks").doc("my_tasks");
-    await docRef.set({
+    const docRef = await db.collection("tasks").add({
       taskTitle,
       description,
       startDate,
@@ -39,8 +36,8 @@ export default async function handler(
       status,
       priority
     });
-    res.status(200).send("Successfully created post request");
+    res.status(200).json({ uniqueId: docRef.id });
   } else {
-    res.status(500).send("Something is wrong, Please try later");
+    res.status(405).send("Method not allowed");
   }
 }

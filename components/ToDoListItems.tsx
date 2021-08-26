@@ -1,4 +1,4 @@
-import { deleteItems, removeAll } from "../actions/index";
+import { deleteTaskItem, removeAll, deleteTaskRequest } from "../actions/index";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Heading from "./Heading";
@@ -54,6 +54,10 @@ const ToDoList = () => {
   const errorState = useSelector(
     (state: RootStateOrAny) => state.todoReducers.error
   );
+  const taskId = useSelector(
+    (state: RootStateOrAny) => state.todoReducers.uniqueTaskId.uniqueId
+  );
+
   return (
     <ToDoListItemsBox>
       <Heading />
@@ -187,7 +191,10 @@ const ToDoList = () => {
                       marginTop: "10px",
                       marginLeft: "5px"
                     }}
-                    onClick={() => dispatch(deleteItems(element.id))}
+                    onClick={() => {
+                      dispatch(deleteTaskRequest(taskId));
+                      dispatch(deleteTaskItem(element.id));
+                    }}
                   />
                 </TableRow>
               </TableBody>

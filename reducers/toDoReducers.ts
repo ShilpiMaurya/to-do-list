@@ -1,7 +1,8 @@
 const initialData = {
   loading: false,
   list: [],
-  error: ""
+  error: "",
+  uniqueTaskId: ""
 };
 
 type Action = {
@@ -25,7 +26,7 @@ type Item = {
 
 const toDoReducers = (state = initialData, action: Action | any) => {
   switch (action.type) {
-    case "ITEM_ADDED":
+    case "TASK_ITEM_ADDED":
       const {
         id,
         taskTitleData,
@@ -52,7 +53,7 @@ const toDoReducers = (state = initialData, action: Action | any) => {
         loading: false,
         error: ""
       };
-    case "ITEM_DELETED":
+    case "TASK_ITEM_DELETED":
       const newList = state.list.filter((elem: Item) => {
         return elem.id !== action.payload.id;
       });
@@ -65,13 +66,18 @@ const toDoReducers = (state = initialData, action: Action | any) => {
         ...state,
         list: []
       };
-    case "POST_DATA_REQUEST":
+    case "CREATE_TASK_REQUEST":
       return {
         ...state,
         loading: true,
         error: ""
       };
-    case "POST_DATA_FAILURE":
+    case "CREATE_TASK_REQUEST_SUCCESS":
+      return {
+        ...state,
+        uniqueTaskId: action.payload
+      };
+    case "CREATE_TASK_REQUEST_FAILURE":
       return {
         loading: false,
         error: action.payload

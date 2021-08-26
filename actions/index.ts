@@ -1,7 +1,7 @@
 import axios from "axios";
 import { AppDispatch } from "../store";
 
-export const addItems = (
+export const addTaskItem = (
   taskTitleData: string,
   descriptionData: string,
   startDateData: string,
@@ -10,7 +10,7 @@ export const addItems = (
   statusData: string
 ) => {
   return {
-    type: "ITEM_ADDED",
+    type: "TASK_ITEM_ADDED",
     payload: {
       id: new Date().getTime().toString(),
       taskTitleData: taskTitleData,
@@ -23,9 +23,9 @@ export const addItems = (
   };
 };
 
-export const deleteItems = (id: string) => {
+export const deleteTaskItem = (id: string) => {
   return {
-    type: "ITEM_DELETED",
+    type: "TASK_ITEM_DELETED",
     payload: {
       id
     }
@@ -38,20 +38,29 @@ export const removeAll = () => {
   };
 };
 
-export const postDataRequest = () => {
+export const createTaskRequest = () => {
   return {
-    type: "POST_DATA_REQUEST"
+    type: "CREATE_TASK_REQUEST"
   };
 };
 
-export const postDataFailure = (error: string) => {
+export const createTaskRequestSuccess = (uniqueId: string) => {
   return {
-    type: "POST_DATA_FAILURE",
+    type: "CREATE_TASK_REQUEST_SUCCESS",
+    payload: {
+      uniqueId
+    }
+  };
+};
+
+export const createTaskRequestFailure = (error: string) => {
+  return {
+    type: "CREATE_TASK_REQUEST_FAILURE",
     payload: { error }
   };
 };
 
-export const postData = (
+export const createTask = (
   taskTitle: string,
   description: string,
   startDate: string,
@@ -60,8 +69,8 @@ export const postData = (
   priority: string
 ) => {
   return (dispatch: AppDispatch) => {
-    dispatch(postDataRequest());
-    const url = "/api/task";
+    dispatch(createTaskRequest());
+    const url = "/api/tasks";
     const data = {
       taskTitle: taskTitle,
       description: description,
@@ -75,7 +84,7 @@ export const postData = (
       .then(data => {
         if (data) {
           dispatch(
-            addItems(
+            addTaskItem(
               taskTitle,
               description,
               startDate,
@@ -84,8 +93,16 @@ export const postData = (
               status
             )
           );
+          dispatch(createTaskRequestSuccess(data.data.uniqueId));
         }
       })
-      .catch(error => dispatch(postDataFailure(error.message)));
+      .catch(error => dispatch(createTaskRequestFailure(error.message)));
+  };
+};
+
+export const deleteTaskRequest = (uniqueId: string) => {
+  return () => {
+    const url = `/api/tasks/${uniqueId}`;
+    axios.delete(url);
   };
 };
