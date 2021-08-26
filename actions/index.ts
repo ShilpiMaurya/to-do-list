@@ -10,7 +10,7 @@ export const addItems = (
   statusData: string
 ) => {
   return {
-    type: "ITEM_ADDED",
+    type: "TASK_ITEMS_ADDED",
     payload: {
       id: new Date().getTime().toString(),
       taskTitleData: taskTitleData,
@@ -25,7 +25,7 @@ export const addItems = (
 
 export const deleteItems = (id: string) => {
   return {
-    type: "ITEM_DELETED",
+    type: "TASK_ITEMS_DELETED",
     payload: {
       id
     }
@@ -38,29 +38,29 @@ export const removeAll = () => {
   };
 };
 
-export const postDataRequest = () => {
+export const postTaskDataRequest = () => {
   return {
-    type: "POST_DATA_REQUEST"
+    type: "POST_TASK_DATA_REQUEST"
   };
 };
 
-export const postDataSuccess = (uniqueId: string) => {
+export const postTaskDataSuccess = (uniqueId: string) => {
   return {
-    type: "POST_DATA_SUCCESS",
+    type: "POST_TASK_DATA_SUCCESS",
     payload: {
       uniqueId
     }
   };
 };
 
-export const postDataFailure = (error: string) => {
+export const postTaskDataFailure = (error: string) => {
   return {
-    type: "POST_DATA_FAILURE",
+    type: "POST_TASK_DATA_FAILURE",
     payload: { error }
   };
 };
 
-export const postData = (
+export const postTaskData = (
   taskTitle: string,
   description: string,
   startDate: string,
@@ -69,7 +69,7 @@ export const postData = (
   priority: string
 ) => {
   return (dispatch: AppDispatch) => {
-    dispatch(postDataRequest());
+    dispatch(postTaskDataRequest());
     const url = "/api/tasks";
     const data = {
       taskTitle: taskTitle,
@@ -93,10 +93,10 @@ export const postData = (
               status
             )
           );
-          dispatch(postDataSuccess(data.data.uniqueId));
+          dispatch(postTaskDataSuccess(data.data.uniqueId));
         }
       })
-      .catch(error => dispatch(postDataFailure(error.message)));
+      .catch(error => dispatch(postTaskDataFailure(error.message)));
   };
 };
 

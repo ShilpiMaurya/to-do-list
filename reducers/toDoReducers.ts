@@ -26,7 +26,7 @@ type Item = {
 
 const toDoReducers = (state = initialData, action: Action | any) => {
   switch (action.type) {
-    case "ITEM_ADDED":
+    case "TASK_ITEMS_ADDED":
       const {
         id,
         taskTitleData,
@@ -53,7 +53,7 @@ const toDoReducers = (state = initialData, action: Action | any) => {
         loading: false,
         error: ""
       };
-    case "ITEM_DELETED":
+    case "TASK_ITEMS_DELETED":
       const newList = state.list.filter((elem: Item) => {
         return elem.id !== action.payload.id;
       });
@@ -66,18 +66,18 @@ const toDoReducers = (state = initialData, action: Action | any) => {
         ...state,
         list: []
       };
-    case "POST_DATA_REQUEST":
+    case "POST_TASK_DATA_REQUEST":
       return {
         ...state,
         loading: true,
         error: ""
       };
-    case "POST_DATA_SUCCESS":
+    case "POST_TASK_DATA_SUCCESS":
       return {
         ...state,
         uniqueTaskId: action.payload
       };
-    case "POST_DATA_FAILURE":
+    case "POST_TASK_DATA_FAILURE":
       return {
         loading: false,
         error: action.payload

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { postData } from "../actions/index";
+import { postTaskData } from "../actions/index";
 import { useDispatch } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -87,7 +87,14 @@ const InputData = () => {
   const handleButtonClick = () => {
     if (taskTitle && startDate && endDate && priority && status) {
       dispatch(
-        postData(taskTitle, description, startDate, endDate, priority, status)
+        postTaskData(
+          taskTitle,
+          description,
+          startDate,
+          endDate,
+          priority,
+          status
+        )
       );
     }
     setOpenModal(false);

@@ -57,9 +57,6 @@ const ToDoList = () => {
   const taskId = useSelector(
     (state: RootStateOrAny) => state.todoReducers.uniqueTaskId.uniqueId
   );
-  const handleDeleteButton = () => {
-    dispatch(deleteData(taskId));
-  };
 
   return (
     <ToDoListItemsBox>
@@ -194,7 +191,10 @@ const ToDoList = () => {
                       marginTop: "10px",
                       marginLeft: "5px"
                     }}
-                    onClick={handleDeleteButton}
+                    onClick={() => {
+                      dispatch(deleteData(taskId));
+                      dispatch(deleteItems(element.id));
+                    }}
                   />
                 </TableRow>
               </TableBody>
