@@ -27,6 +27,6 @@ export default async function deleteHandler(
       .delete();
     res.status(200).send("Successfully deleted a document");
   } else {
-    res.status(500).send("Something is wrong, Please try later");
+    res.status(405).send("Method not allowed");
   }
 }

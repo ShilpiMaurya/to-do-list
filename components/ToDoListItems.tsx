@@ -1,4 +1,4 @@
-import { deleteItems, removeAll, deleteData } from "../actions/index";
+import { deleteItems, removeAll, deleteTaskData } from "../actions/index";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Heading from "./Heading";
@@ -192,7 +192,7 @@ const ToDoList = () => {
                       marginLeft: "5px"
                     }}
                     onClick={() => {
-                      dispatch(deleteData(taskId));
+                      dispatch(deleteTaskData(taskId));
                       dispatch(deleteItems(element.id));
                     }}
                   />

@@ -38,6 +38,6 @@ export default async function handler(
     });
     res.status(200).json({ uniqueId: docRef.id });
   } else {
-    res.status(500).send("Something is wrong, Please try later");
+    res.status(405).send("Method not allowed");
   }
 }

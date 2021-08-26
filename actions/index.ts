@@ -100,7 +100,7 @@ export const postTaskData = (
   };
 };
 
-export const deleteData = (uniqueId: string) => {
+export const deleteTaskData = (uniqueId: string) => {
   return () => {
     const url = `/api/tasks/${uniqueId}`;
     axios.delete(url);
