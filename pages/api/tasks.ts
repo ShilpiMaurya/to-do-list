@@ -37,12 +37,6 @@ export default async function handler(
       priority
     });
     res.status(200).json({ uniqueId: docRef.id });
-  } else if (method === "DELETE") {
-    await db
-      .collection("tasks")
-      .doc()
-      .delete();
-    res.status(200).send("Successfully deleted a document");
   } else {
     res.status(500).send("Something is wrong, Please try later");
   }

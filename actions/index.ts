@@ -99,3 +99,10 @@ export const postData = (
       .catch(error => dispatch(postDataFailure(error.message)));
   };
 };
+
+export const deleteData = (uniqueId: string) => {
+  return () => {
+    const url = `/api/tasks/${uniqueId}`;
+    axios.delete(url);
+  };
+};
