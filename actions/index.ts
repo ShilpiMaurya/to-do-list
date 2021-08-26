@@ -1,7 +1,7 @@
 import axios from "axios";
 import { AppDispatch } from "../store";
 
-export const addItems = (
+export const addTaskItem = (
   taskTitleData: string,
   descriptionData: string,
   startDateData: string,
@@ -10,7 +10,7 @@ export const addItems = (
   statusData: string
 ) => {
   return {
-    type: "TASK_ITEMS_ADDED",
+    type: "TASK_ITEM_ADDED",
     payload: {
       id: new Date().getTime().toString(),
       taskTitleData: taskTitleData,
@@ -23,9 +23,9 @@ export const addItems = (
   };
 };
 
-export const deleteItems = (id: string) => {
+export const deleteTaskItem = (id: string) => {
   return {
-    type: "TASK_ITEMS_DELETED",
+    type: "TASK_ITEM_DELETED",
     payload: {
       id
     }
@@ -38,29 +38,29 @@ export const removeAll = () => {
   };
 };
 
-export const postTaskDataRequest = () => {
+export const createTaskRequest = () => {
   return {
-    type: "POST_TASK_DATA_REQUEST"
+    type: "CREATE_TASK_REQUEST"
   };
 };
 
-export const postTaskDataSuccess = (uniqueId: string) => {
+export const createTaskRequestSuccess = (uniqueId: string) => {
   return {
-    type: "POST_TASK_DATA_SUCCESS",
+    type: "CREATE_TASK_REQUEST_SUCCESS",
     payload: {
       uniqueId
     }
   };
 };
 
-export const postTaskDataFailure = (error: string) => {
+export const createTaskRequestFailure = (error: string) => {
   return {
-    type: "POST_TASK_DATA_FAILURE",
+    type: "CREATE_TASK_REQUEST_FAILURE",
     payload: { error }
   };
 };
 
-export const postTaskData = (
+export const createTask = (
   taskTitle: string,
   description: string,
   startDate: string,
@@ -69,7 +69,7 @@ export const postTaskData = (
   priority: string
 ) => {
   return (dispatch: AppDispatch) => {
-    dispatch(postTaskDataRequest());
+    dispatch(createTaskRequest());
     const url = "/api/tasks";
     const data = {
       taskTitle: taskTitle,
@@ -84,7 +84,7 @@ export const postTaskData = (
       .then(data => {
         if (data) {
           dispatch(
-            addItems(
+            addTaskItem(
               taskTitle,
               description,
               startDate,
@@ -93,14 +93,14 @@ export const postTaskData = (
               status
             )
           );
-          dispatch(postTaskDataSuccess(data.data.uniqueId));
+          dispatch(createTaskRequestSuccess(data.data.uniqueId));
         }
       })
-      .catch(error => dispatch(postTaskDataFailure(error.message)));
+      .catch(error => dispatch(createTaskRequestFailure(error.message)));
   };
 };
 
-export const deleteTaskData = (uniqueId: string) => {
+export const deleteTaskRequest = (uniqueId: string) => {
   return () => {
     const url = `/api/tasks/${uniqueId}`;
     axios.delete(url);
