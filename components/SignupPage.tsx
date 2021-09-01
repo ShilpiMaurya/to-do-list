@@ -17,7 +17,7 @@ const ModalTitleBox = styled.div`
 const SignUpBox = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 25px 30px 30px 30px;
+  padding: 20px 30px 30px 30px;
 `;
 
 const ModalContent = styled.div`
@@ -64,13 +64,47 @@ const CloseIconButton = styled.div`
   cursor: pointer;
 `;
 
+const ErrorMessageContainer = styled.div`
+  height: 20px;
+`;
+
+const ErrorMessage = styled.div`
+  color: #ff6961;
+`;
+
 const SignupPage = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [nameErrorMessage, setNameErrorMessage] = useState("");
+  const [emailErrorMessage, setEmailErrorMessage] = useState("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const disabled = !(name && email && password);
+
   const handleOnButtonClick = () => {
     setOpenModal(true);
   };
+
   const handleModalClose = () => {
-    setOpenModal(false);
+    setOpenModal(false),
+      setName(""),
+      setPassword(""),
+      setEmail(""),
+      setNameErrorMessage(""),
+      setEmailErrorMessage(""),
+      setPasswordErrorMessage("");
+  };
+
+  const handleSignUpButtonClick = () => {
+    setOpenModal(false),
+      setName(""),
+      setPassword(""),
+      setEmail(""),
+      setNameErrorMessage(""),
+      setEmailErrorMessage(""),
+      setPasswordErrorMessage("");
   };
   return (
     <>
@@ -79,6 +113,8 @@ const SignupPage = () => {
         open={openModal}
         onClose={handleModalClose}
         aria-labelledby="form-dialog-title"
+        maxWidth="xs"
+        fullWidth={true}
       >
         <CloseIconContainer>
           <CloseIconButton>
@@ -88,9 +124,73 @@ const SignupPage = () => {
         <SignUpBox>
           <ModalTitleBox>Create Account</ModalTitleBox>
           <ModalContent>
-            <TextField margin="dense" label="Name" type="text" fullWidth />
-            <TextField margin="dense" label="Email" type="text" fullWidth />
-            <TextField margin="dense" label="Password" type="text" fullWidth />
+            <TextField
+              margin="dense"
+              label="Name"
+              type="name"
+              fullWidth
+              value={name}
+              onChange={event => setName(event.target.value)}
+              onBlur={event => {
+                const input = event.target.value;
+                if (!input.length) {
+                  setNameErrorMessage("Please, enter a valid name");
+                } else {
+                  setNameErrorMessage("");
+                }
+              }}
+            />
+            <ErrorMessageContainer>
+              {!!nameErrorMessage && (
+                <ErrorMessage>{nameErrorMessage}</ErrorMessage>
+              )}
+            </ErrorMessageContainer>
+            <TextField
+              margin="dense"
+              label="Email Address"
+              type="email"
+              fullWidth
+              value={email}
+              onChange={event => setEmail(event.target.value)}
+              onBlur={event => {
+                const input = event.target.value;
+                if (!input.match(emailFormat)) {
+                  setEmailErrorMessage(
+                    "This field is required, Please, enter a valid email"
+                  );
+                } else {
+                  setEmailErrorMessage("");
+                }
+              }}
+            />
+            <ErrorMessageContainer>
+              {!!emailErrorMessage && (
+                <ErrorMessage>{emailErrorMessage}</ErrorMessage>
+              )}
+            </ErrorMessageContainer>
+            <TextField
+              margin="dense"
+              label="Password"
+              type="password"
+              fullWidth
+              value={password}
+              onChange={event => setPassword(event.target.value)}
+              onBlur={event => {
+                const input = event.target.value;
+                if (input.length < 6) {
+                  setPasswordErrorMessage(
+                    "Password must be minimun 6 characters"
+                  );
+                } else {
+                  setPasswordErrorMessage("");
+                }
+              }}
+            />
+            <ErrorMessageContainer>
+              {!!passwordErrorMessage && (
+                <ErrorMessage>{passwordErrorMessage}</ErrorMessage>
+              )}
+            </ErrorMessageContainer>
             <CheckBoxContainer>
               <Checkbox color="primary" size="medium" />
               <CheckBoxText>Remember me</CheckBoxText>
@@ -100,12 +200,14 @@ const SignupPage = () => {
             <Button
               color="primary"
               variant="contained"
+              disabled={disabled}
               style={{
                 marginLeft: "20px",
                 marginRight: "20px",
                 marginTop: "20px",
                 width: "100%"
               }}
+              onClick={handleSignUpButtonClick}
             >
               SignUp
             </Button>
