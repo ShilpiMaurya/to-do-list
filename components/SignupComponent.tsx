@@ -4,11 +4,11 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 
 const ModalTitleBox = styled.div`
-  color: #3f51b5;
+  color: var(--modal-secondary-color);
   font-size: 30px;
   font-weight: 100;
   padding-bottom: 10px;
@@ -31,7 +31,7 @@ const CheckBoxContainer = styled.div`
 `;
 
 const CheckBoxText = styled.div`
-  color: #757575;
+  color: var(--modal-primary-color);
   align-self: center;
 `;
 
@@ -48,12 +48,12 @@ const Footer = styled.div`
 `;
 
 const FooterText = styled.div`
-  color: #757575;
+  color: var(--modal-primary-color);
 `;
 
 const FooterLink = styled.div`
   padding-left: 5px;
-  color: #3f51b5;
+  color: var(--modal-secondary-color);
   cursor: pointer;
 `;
 
@@ -73,19 +73,17 @@ const ErrorMessageContainer = styled.div`
 `;
 
 const ErrorMessage = styled.div`
-  color: #ff6961;
+  color: var(--modal-error-color);
 `;
 
 const SignUpButtonContainer = styled.div`
   display: flex;
   width: 100%;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-top: 20px;
+  margin: 15px 20px 5px 20px;
   justify-content: center;
 `;
 
-const SignupPage = () => {
+const SignupComponent = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -98,11 +96,11 @@ const SignupPage = () => {
     !(name && email && password) ||
     !!(nameErrorMessage || emailErrorMessage || passwordErrorMessage);
 
-  const handleOnButtonClick = () => {
+  const handleOnButtonClick = useCallback(() => {
     setOpenModal(true);
-  };
+  }, [openModal]);
 
-  const handleModalClose = () => {
+  const handleModalClose = useCallback(() => {
     setOpenModal(false),
       setName(""),
       setPassword(""),
@@ -110,9 +108,17 @@ const SignupPage = () => {
       setNameErrorMessage(""),
       setEmailErrorMessage(""),
       setPasswordErrorMessage("");
-  };
+  }, [
+    openModal,
+    name,
+    password,
+    email,
+    nameErrorMessage,
+    emailErrorMessage,
+    passwordErrorMessage
+  ]);
 
-  const handleSignUpButtonClick = () => {
+  const handleSignUpButtonClick = useCallback(() => {
     setOpenModal(false),
       setName(""),
       setPassword(""),
@@ -120,7 +126,15 @@ const SignupPage = () => {
       setNameErrorMessage(""),
       setEmailErrorMessage(""),
       setPasswordErrorMessage("");
-  };
+  }, [
+    openModal,
+    name,
+    password,
+    email,
+    nameErrorMessage,
+    emailErrorMessage,
+    passwordErrorMessage
+  ]);
   return (
     <>
       <button onClick={handleOnButtonClick}>SignUp</button>
@@ -236,4 +250,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default SignupComponent;

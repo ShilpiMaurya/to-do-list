@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import SignupPage from "../components/SignupPage";
+import SignupComponent from "../components/SignupComponent";
 
-const Container = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,10 +20,10 @@ const H1 = styled.div`
 const Signup = () => {
   return (
     <>
-      <Container>
+      <Layout>
         <H1>Welcome to to-do list app</H1>
-        <SignupPage />
-      </Container>
+        <SignupComponent />
+      </Layout>
     </>
   );
 };
