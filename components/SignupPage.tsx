@@ -39,8 +39,12 @@ const Footer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   padding-top: 20px;
   padding-bottom: 20px;
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
 `;
 
 const FooterText = styled.div`
