@@ -34,7 +34,6 @@ button {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   color: #fff;
-  font-weight: 400;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
@@ -43,7 +42,8 @@ button:hover {
   box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* .head_element {
-  position: sticky;
-  top: 0;
-} */
+:root {
+  --modal-primary-color: #757575;
+  --modal-secondary-color: #3f51b5;
+  --modal-error-color: #ff6961;
+}
