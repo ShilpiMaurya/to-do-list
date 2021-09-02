@@ -72,6 +72,15 @@ const ErrorMessage = styled.div`
   color: #ff6961;
 `;
 
+const SignUpButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  justify-content: center;
+`;
+
 const SignupPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -81,7 +90,9 @@ const SignupPage = () => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const disabled = !(name && email && password);
+  const disabled =
+    !(name && email && password) ||
+    !!(nameErrorMessage || emailErrorMessage || passwordErrorMessage);
 
   const handleOnButtonClick = () => {
     setOpenModal(true);
@@ -197,20 +208,17 @@ const SignupPage = () => {
             </CheckBoxContainer>
           </ModalContent>
           <DialogActions>
-            <Button
-              color="primary"
-              variant="contained"
-              disabled={disabled}
-              style={{
-                marginLeft: "20px",
-                marginRight: "20px",
-                marginTop: "20px",
-                width: "100%"
-              }}
-              onClick={handleSignUpButtonClick}
-            >
-              SignUp
-            </Button>
+            <SignUpButtonContainer>
+              <Button
+                color="primary"
+                variant="contained"
+                disabled={disabled}
+                onClick={handleSignUpButtonClick}
+                fullWidth
+              >
+                SignUp
+              </Button>
+            </SignUpButtonContainer>
           </DialogActions>
           <Footer>
             <FooterText>Have already an account ?</FooterText>
