@@ -19,16 +19,20 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { method } = req;
-  const { email, password, displayName } = req.body;
-  if (method === "POST") {
-    const uniqueUserId = await auth.createUser({
-      email,
-      password,
-      displayName
-    });
-    res.status(200).json({ uid: uniqueUserId.uid });
-  } else {
-    res.status(405).send("Method not allowed");
+  try {
+    const { method } = req;
+    const { email, password, displayName } = req.body;
+    if (method === "POST") {
+      const uniqueUserId = await auth.createUser({
+        email,
+        password,
+        displayName
+      });
+      res.status(200).json({ uid: uniqueUserId.uid });
+    } else {
+      res.status(405).send("Method not allowed");
+    }
+  } catch (error) {
+    res.status(500).send({ message: `${error.code} - ${error.message}` });
   }
 }
