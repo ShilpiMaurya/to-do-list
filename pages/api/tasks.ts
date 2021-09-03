@@ -18,26 +18,30 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { body, method } = req;
-  if (method === "POST") {
-    const {
-      taskTitle,
-      description,
-      startDate,
-      endDate,
-      status,
-      priority
-    } = body;
-    const docRef = await db.collection("tasks").add({
-      taskTitle,
-      description,
-      startDate,
-      endDate,
-      status,
-      priority
-    });
-    res.status(200).json({ uniqueId: docRef.id });
-  } else {
-    res.status(405).send("Method not allowed");
+  try {
+    const { body, method } = req;
+    if (method === "POST") {
+      const {
+        taskTitle,
+        description,
+        startDate,
+        endDate,
+        status,
+        priority
+      } = body;
+      const docRef = await db.collection("tasks").add({
+        taskTitle,
+        description,
+        startDate,
+        endDate,
+        status,
+        priority
+      });
+      res.status(200).json({ uniqueId: docRef.id });
+    } else {
+      res.status(405).send("Method not allowed");
+    }
+  } catch (error) {
+    res.status(500).send({ message: `${error.code} - ${error.message}` });
   }
 }
