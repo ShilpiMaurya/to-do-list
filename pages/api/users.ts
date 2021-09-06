@@ -30,7 +30,7 @@ export default async function handler(
         password,
         displayName
       });
-      setCookie({ res }, "cookie_name", "cookie_value", {
+      setCookie({ res }, "fromServer", `${uniqueUserId.uid}`, {
         maxAge: 30 * 24 * 60 * 60,
         httpOnly: true
       });
