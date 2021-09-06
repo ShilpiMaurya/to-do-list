@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+const { setCookie } = require("nookies");
 const admin = require("firebase-admin");
 const serviceAccount = process.env.NEXT_PUBLIC_FIREBASE_SERVICE_ACCOUNT;
 
@@ -22,11 +23,16 @@ export default async function handler(
   try {
     const { method } = req;
     const { email, password, displayName } = req.body;
+
     if (method === "POST") {
       const uniqueUserId = await auth.createUser({
         email,
         password,
         displayName
+      });
+      setCookie({ res }, "cookie_name", "cookie_value", {
+        maxAge: 30 * 24 * 60 * 60,
+        httpOnly: true
       });
       res.status(200).json({ uid: uniqueUserId.uid });
     } else {
