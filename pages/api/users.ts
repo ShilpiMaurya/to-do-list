@@ -13,31 +13,22 @@ if (!admin.apps.length) {
   }
 }
 
-const db = admin.firestore();
+const auth = admin.auth();
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
-    const { body, method } = req;
+    const { method } = req;
+    const { email, password, displayName } = req.body;
     if (method === "POST") {
-      const {
-        taskTitle,
-        description,
-        startDate,
-        endDate,
-        status,
-        priority
-      } = body;
-      const docRef = await db.collection("tasks").add({
-        taskTitle,
-        description,
-        startDate,
-        endDate,
-        status,
-        priority
+      const uniqueUserId = await auth.createUser({
+        email,
+        password,
+        displayName
       });
-      res.status(200).json({ uniqueId: docRef.id });
+      res.status(200).json({ uid: uniqueUserId.uid });
     } else {
       res.status(405).send("Method not allowed");
     }

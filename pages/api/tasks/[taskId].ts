@@ -18,15 +18,19 @@ export default async function deleteHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { taskId } = req.query;
-  const { method } = req;
-  if (method === "DELETE") {
-    await db
-      .collection("tasks")
-      .doc(taskId)
-      .delete();
-    res.status(200).send("Successfully deleted a document");
-  } else {
-    res.status(405).send("Method not allowed");
+  try {
+    const { taskId } = req.query;
+    const { method } = req;
+    if (method === "DELETE") {
+      await db
+        .collection("tasks")
+        .doc(taskId)
+        .delete();
+      res.status(200).send("Successfully deleted a document");
+    } else {
+      res.status(405).send("Method not allowed");
+    }
+  } catch (error) {
+    res.status(500).send({ message: `${error.code} - ${error.message}` });
   }
 }
