@@ -60,9 +60,9 @@ export const createTaskRequestFailure = (error: string) => {
   };
 };
 
-export const createUserRequest = () => {
+export const userCreationRequest = () => {
   return {
-    type: "USER_REQUEST_CREATED"
+    type: "USER_CREATION_REQUEST_CREATED"
   };
 };
 
@@ -81,17 +81,17 @@ export const addUserCredential = (
   };
 };
 
-export const userRequestSuccess = (uniqueUserId: string) => {
+export const userCreationSuccess = (uniqueUserId: string) => {
   return {
-    type: "USER_REQUEST_SUCCEED",
+    type: "USER_CREATION_SUCCEED",
     payload: { uniqueUserId }
   };
 };
 
-export const userRequestFailure = (userError: string) => {
+export const userCreationFailure = (error: string) => {
   return {
-    type: "USER_REQUEST_FAILED",
-    payload: { userError }
+    type: "USER_CREATION_FAILED",
+    payload: { error }
   };
 };
 
@@ -144,7 +144,7 @@ export const deleteTaskRequest = (uniqueId: string) => {
 
 export const createUser = (name: string, email: string, password: string) => {
   return (dispatch: AppDispatch) => {
-    dispatch(createUserRequest());
+    dispatch(userCreationRequest());
     const url = "/api/users";
     const data = {
       name,
@@ -155,11 +155,11 @@ export const createUser = (name: string, email: string, password: string) => {
       .then(data => {
         if (data) {
           dispatch(addUserCredential(name, email, password));
-          dispatch(userRequestSuccess(data.data.uid));
+          dispatch(userCreationSuccess(data.data.uid));
         }
       })
       .catch(error => {
-        dispatch(userRequestFailure(error.message));
+        dispatch(userCreationFailure(error.message));
       });
   };
 };

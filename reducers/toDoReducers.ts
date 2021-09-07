@@ -86,7 +86,7 @@ const toDoReducers = (state = initialData, action: Action | any) => {
         loading: false,
         error: action.payload
       };
-    case "USER_REQUEST_CREATED":
+    case "USER_CREATION_REQUEST_CREATED":
       return {
         ...state,
         loading: true,
@@ -103,12 +103,12 @@ const toDoReducers = (state = initialData, action: Action | any) => {
         uniqueUserId: "",
         userError: ""
       };
-    case "USER_REQUEST_SUCCEED":
+    case "USER_CREATION_SUCCEED":
       return {
         ...state,
         uniqueUserId: action.payload
       };
-    case "USER_REQUEST_FAILED":
+    case "USER_CREATION_FAILED":
       return {
         ...state,
         userError: action.payload
