@@ -6,6 +6,9 @@ import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import { useState, useCallback } from "react";
 import CloseIcon from "@material-ui/icons/Close";
+import { createUser } from "../actions/index";
+import { AppDispatch } from "../store";
+import { useDispatch } from "react-redux";
 
 const ModalTitleBox = styled.div`
   color: var(--modal-secondary-color);
@@ -84,6 +87,7 @@ const SignUpButtonContainer = styled.div`
 `;
 
 const SignupComponent = () => {
+  const dispatch: AppDispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -119,6 +123,9 @@ const SignupComponent = () => {
   ]);
 
   const handleSignUpButtonClick = useCallback(() => {
+    if (name && email && password) {
+      dispatch(createUser(name, email, password));
+    }
     setOpenModal(false),
       setName(""),
       setPassword(""),
