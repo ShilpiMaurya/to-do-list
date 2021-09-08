@@ -9,6 +9,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { createUser } from "../actions/index";
 import { AppDispatch } from "../store";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 const ModalTitleBox = styled.div`
   color: var(--modal-secondary-color);
@@ -88,6 +89,7 @@ const SignUpButtonContainer = styled.div`
 
 const SignupComponent = () => {
   const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -126,6 +128,7 @@ const SignupComponent = () => {
     if (name && email && password) {
       dispatch(createUser(name, email, password));
     }
+    router.push("/");
     setOpenModal(false),
       setName(""),
       setPassword(""),
