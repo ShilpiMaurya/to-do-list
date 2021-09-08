@@ -2,7 +2,11 @@ const initialData = {
   loading: false,
   list: [],
   error: "",
-  uniqueTaskId: ""
+  uniqueTaskId: "",
+  userLoading: false,
+  userCredential: {},
+  uniqueUserId: "",
+  userError: ""
 };
 
 type Action = {
@@ -81,6 +85,33 @@ const toDoReducers = (state = initialData, action: Action | any) => {
       return {
         loading: false,
         error: action.payload
+      };
+    case "USER_CREATION_REQUEST_CREATED":
+      return {
+        ...state,
+        loading: true,
+        userCredential: {},
+        uniqueUserId: "",
+        userError: ""
+      };
+    case "USER_CREDENTIAL_ADDED":
+      const { name, email, password } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        userCredential: { name, email, password },
+        uniqueUserId: "",
+        userError: ""
+      };
+    case "USER_CREATION_SUCCEED":
+      return {
+        ...state,
+        uniqueUserId: action.payload
+      };
+    case "USER_CREATION_FAILED":
+      return {
+        ...state,
+        userError: action.payload
       };
     default:
       return state;

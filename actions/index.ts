@@ -60,6 +60,41 @@ export const createTaskRequestFailure = (error: string) => {
   };
 };
 
+export const userCreationRequest = () => {
+  return {
+    type: "USER_CREATION_REQUEST_CREATED"
+  };
+};
+
+export const addUserCredential = (
+  name: string,
+  email: string,
+  password: string
+) => {
+  return {
+    type: "USER_CREDENTIAL_ADDED",
+    payload: {
+      name,
+      email,
+      password
+    }
+  };
+};
+
+export const userCreationSuccess = (uniqueUserId: string) => {
+  return {
+    type: "USER_CREATION_SUCCEED",
+    payload: { uniqueUserId }
+  };
+};
+
+export const userCreationFailure = (error: string) => {
+  return {
+    type: "USER_CREATION_FAILED",
+    payload: { error }
+  };
+};
+
 export const createTask = (
   taskTitle: string,
   description: string,
@@ -104,5 +139,27 @@ export const deleteTaskRequest = (uniqueId: string) => {
   return () => {
     const url = `/api/tasks/${uniqueId}`;
     axios.delete(url);
+  };
+};
+
+export const createUser = (name: string, email: string, password: string) => {
+  return (dispatch: AppDispatch) => {
+    dispatch(userCreationRequest());
+    const url = "/api/users";
+    const data = {
+      name,
+      email,
+      password
+    };
+    axios({ method: "post", url: url, data })
+      .then(data => {
+        if (data) {
+          dispatch(addUserCredential(name, email, password));
+          dispatch(userCreationSuccess(data.data.uid));
+        }
+      })
+      .catch(error => {
+        dispatch(userCreationFailure(error.message));
+      });
   };
 };
