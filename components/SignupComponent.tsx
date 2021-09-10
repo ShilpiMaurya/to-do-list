@@ -8,7 +8,13 @@ import { useState, useCallback } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import { createUser } from "../actions/index";
 import { AppDispatch } from "../store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { useRouter } from "next/router";
+import Modal from "@material-ui/core/Modal";
+import { makeStyles } from "@material-ui/core/styles";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const ModalTitleBox = styled.div`
   color: var(--modal-secondary-color);
@@ -86,26 +92,62 @@ const SignUpButtonContainer = styled.div`
   justify-content: center;
 `;
 
+const PopupLayout = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, #fc446b, #3f5efb);
+  color: white;
+  padding: 25px 30px 25px 30px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+`;
+
+const LoadingText = styled.div`
+  font-size: 20px;
+  padding-left: 20px;
+`;
+
+const useStyles = makeStyles({
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  }
+});
+
 const SignupComponent = () => {
   const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
+  const classes = useStyles();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nameErrorMessage, setNameErrorMessage] = useState("");
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
-  const [openModal, setOpenModal] = useState(false);
+  const [openSignupModal, setOpenSignupModal] = useState(false);
+  const [openLoadingModal, setOpenLoadingModal] = useState(false);
+  const uniqueUserId = useSelector(
+    (state: RootStateOrAny) => state.todoReducers.uniqueUserId.uniqueUserId
+  );
+  if (uniqueUserId) {
+    router.push("/");
+  }
   const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const disabled =
     !(name && email && password) ||
     !!(nameErrorMessage || emailErrorMessage || passwordErrorMessage);
 
   const handleOnButtonClick = useCallback(() => {
-    setOpenModal(true);
-  }, [openModal]);
+    setOpenSignupModal(true);
+  }, [openSignupModal]);
 
   const handleModalClose = useCallback(() => {
-    setOpenModal(false),
+    setOpenSignupModal(false),
       setName(""),
       setPassword(""),
       setEmail(""),
@@ -113,7 +155,7 @@ const SignupComponent = () => {
       setEmailErrorMessage(""),
       setPasswordErrorMessage("");
   }, [
-    openModal,
+    openSignupModal,
     name,
     password,
     email,
@@ -126,27 +168,13 @@ const SignupComponent = () => {
     if (name && email && password) {
       dispatch(createUser(name, email, password));
     }
-    setOpenModal(false),
-      setName(""),
-      setPassword(""),
-      setEmail(""),
-      setNameErrorMessage(""),
-      setEmailErrorMessage(""),
-      setPasswordErrorMessage("");
-  }, [
-    openModal,
-    name,
-    password,
-    email,
-    nameErrorMessage,
-    emailErrorMessage,
-    passwordErrorMessage
-  ]);
+    setOpenLoadingModal(true);
+  }, [name, password, email, openLoadingModal]);
   return (
     <>
       <button onClick={handleOnButtonClick}>SignUp</button>
       <Dialog
-        open={openModal}
+        open={openSignupModal}
         onClose={handleModalClose}
         aria-labelledby="form-dialog-title"
         maxWidth="xs"
@@ -253,6 +281,18 @@ const SignupComponent = () => {
           </Footer>
         </SignUpBox>
       </Dialog>
+      <Modal
+        className={classes.modal}
+        open={openLoadingModal}
+        BackdropComponent={Backdrop}
+      >
+        <Fade in={openLoadingModal}>
+          <PopupLayout>
+            <CircularProgress style={{ color: "white" }} />
+            <LoadingText>Please wait...</LoadingText>
+          </PopupLayout>
+        </Fade>
+      </Modal>
     </>
   );
 };
