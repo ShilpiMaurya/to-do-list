@@ -10,6 +10,11 @@ import { createUser } from "../actions/index";
 import { AppDispatch } from "../store";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useRouter } from "next/router";
+import Modal from "@material-ui/core/Modal";
+import { makeStyles } from "@material-ui/core/styles";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const ModalTitleBox = styled.div`
   color: var(--modal-secondary-color);
@@ -87,9 +92,37 @@ const SignUpButtonContainer = styled.div`
   justify-content: center;
 `;
 
+const PopupLayout = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, #fc446b, #3f5efb);
+  color: white;
+  padding: 25px 30px 25px 30px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+`;
+
+const LoadingText = styled.div`
+  font-size: 20px;
+  padding-left: 20px;
+`;
+
+const useStyles = makeStyles({
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  }
+});
+
 const SignupComponent = () => {
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
+  const classes = useStyles();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -97,6 +130,7 @@ const SignupComponent = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [openModalPopup, setOpenModalPopup] = useState(false);
   const uniqueUserId = useSelector(
     (state: RootStateOrAny) => state.todoReducers.uniqueUserId.uniqueUserId
   );
@@ -134,7 +168,8 @@ const SignupComponent = () => {
     if (name && email && password) {
       dispatch(createUser(name, email, password));
     }
-  }, [name, password, email]);
+    setOpenModalPopup(true);
+  }, [name, password, email, openModalPopup]);
   return (
     <>
       <button onClick={handleOnButtonClick}>SignUp</button>
@@ -246,6 +281,18 @@ const SignupComponent = () => {
           </Footer>
         </SignUpBox>
       </Dialog>
+      <Modal
+        className={classes.modal}
+        open={openModalPopup}
+        BackdropComponent={Backdrop}
+      >
+        <Fade in={openModalPopup}>
+          <PopupLayout>
+            <CircularProgress style={{ color: "white" }} />
+            <LoadingText>Please wait...</LoadingText>
+          </PopupLayout>
+        </Fade>
+      </Modal>
     </>
   );
 };
