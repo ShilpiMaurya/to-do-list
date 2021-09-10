@@ -8,7 +8,7 @@ import { useState, useCallback } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import { createUser } from "../actions/index";
 import { AppDispatch } from "../store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useRouter } from "next/router";
 
 const ModalTitleBox = styled.div`
@@ -97,6 +97,12 @@ const SignupComponent = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const uniqueUserId = useSelector(
+    (state: RootStateOrAny) => state.todoReducers.uniqueUserId.uniqueUserId
+  );
+  if (uniqueUserId) {
+    router.push("/");
+  }
   const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const disabled =
     !(name && email && password) ||
@@ -128,23 +134,7 @@ const SignupComponent = () => {
     if (name && email && password) {
       dispatch(createUser(name, email, password));
     }
-    router.push("/");
-    setOpenModal(false),
-      setName(""),
-      setPassword(""),
-      setEmail(""),
-      setNameErrorMessage(""),
-      setEmailErrorMessage(""),
-      setPasswordErrorMessage("");
-  }, [
-    openModal,
-    name,
-    password,
-    email,
-    nameErrorMessage,
-    emailErrorMessage,
-    passwordErrorMessage
-  ]);
+  }, [name, password, email]);
   return (
     <>
       <button onClick={handleOnButtonClick}>SignUp</button>

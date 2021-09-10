@@ -89,7 +89,7 @@ const toDoReducers = (state = initialData, action: Action | any) => {
     case "USER_CREATION_REQUEST_CREATED":
       return {
         ...state,
-        loading: true,
+        userLoading: true,
         userCredential: {},
         uniqueUserId: "",
         userError: ""
