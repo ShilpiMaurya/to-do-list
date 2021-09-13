@@ -129,6 +129,7 @@ const SignupComponent = () => {
   const [nameErrorMessage, setNameErrorMessage] = useState("");
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const [checked, setChecked] = useState(false);
   const [openSignupModal, setOpenSignupModal] = useState(false);
   const [openLoadingModal, setOpenLoadingModal] = useState(false);
   const uniqueUserId = useSelector(
@@ -170,6 +171,15 @@ const SignupComponent = () => {
     }
     setOpenLoadingModal(true);
   }, [name, password, email, openLoadingModal]);
+
+  const handleCheckedChange = useCallback(
+    e => {
+      setChecked(e.target.checked);
+      console.log("checked", checked);
+    },
+    [checked]
+  );
+
   return (
     <>
       <button onClick={handleOnButtonClick}>SignUp</button>
@@ -256,7 +266,12 @@ const SignupComponent = () => {
               )}
             </ErrorMessageContainer>
             <CheckBoxContainer>
-              <Checkbox color="primary" size="medium" />
+              <Checkbox
+                color="primary"
+                size="medium"
+                checked={checked}
+                onChange={handleCheckedChange}
+              />
               <CheckBoxText>Remember me</CheckBoxText>
             </CheckBoxContainer>
           </ModalContent>
