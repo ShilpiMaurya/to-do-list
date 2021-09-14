@@ -95,11 +95,11 @@ const toDoReducers = (state = initialData, action: Action | any) => {
         userError: ""
       };
     case "USER_CREDENTIAL_ADDED":
-      const { name, email, password } = action.payload;
+      const { name, email, password, checked } = action.payload;
       return {
         ...state,
         loading: false,
-        userCredential: { name, email, password },
+        userCredential: { name, email, password, checked },
         uniqueUserId: "",
         userError: ""
       };

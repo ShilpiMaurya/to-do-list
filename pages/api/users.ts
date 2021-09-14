@@ -22,7 +22,7 @@ export default async function handler(
 ) {
   try {
     const { method } = req;
-    const { email, password, displayName } = req.body;
+    const { email, password, displayName, checked } = req.body;
 
     if (method === "POST") {
       const uniqueUserId = await auth.createUser({
@@ -30,10 +30,12 @@ export default async function handler(
         password,
         displayName
       });
-      setCookie({ res }, "uid", `${uniqueUserId.uid}`, {
-        maxAge: 30 * 24 * 60 * 60,
-        httpOnly: true
-      });
+      if (checked === true) {
+        setCookie({ res }, "uid", `${uniqueUserId.uid}`, {
+          maxAge: 30 * 24 * 60 * 60,
+          httpOnly: true
+        });
+      }
       res.status(200).json({ uid: uniqueUserId.uid });
     } else {
       res.status(405).send("Method not allowed");

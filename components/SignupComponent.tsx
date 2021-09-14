@@ -165,20 +165,20 @@ const SignupComponent = () => {
     passwordErrorMessage
   ]);
 
-  const handleSignUpButtonClick = useCallback(() => {
-    if (name && email && password) {
-      dispatch(createUser(name, email, password));
-    }
-    setOpenLoadingModal(true);
-  }, [name, password, email, openLoadingModal]);
-
-  const handleCheckedChange = useCallback(
+  const handleCheckboxChange = useCallback(
     e => {
       setChecked(e.target.checked);
-      console.log("checked", checked);
     },
     [checked]
   );
+
+  const handleSignUpButtonClick = useCallback(() => {
+    if (name && email && password) {
+      dispatch(createUser(name, email, password, checked));
+    }
+    localStorage.setItem("rememeberMe", checked ? "true" : "false");
+    setOpenLoadingModal(true);
+  }, [name, password, email, openLoadingModal, checked]);
 
   return (
     <>
@@ -270,7 +270,7 @@ const SignupComponent = () => {
                 color="primary"
                 size="medium"
                 checked={checked}
-                onChange={handleCheckedChange}
+                onChange={handleCheckboxChange}
               />
               <CheckBoxText>Remember me</CheckBoxText>
             </CheckBoxContainer>
