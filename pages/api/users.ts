@@ -33,7 +33,8 @@ export default async function handler(
       if (checked === true) {
         setCookie({ res }, "uid", `${uniqueUserId.uid}`, {
           maxAge: 30 * 24 * 60 * 60,
-          httpOnly: true
+          httpOnly: true,
+          path: "/"
         });
       }
       res.status(200).json({ uid: uniqueUserId.uid });
