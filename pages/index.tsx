@@ -48,6 +48,13 @@ export const getServerSideProps: GetServerSideProps = async context => {
         permanent: false
       }
     };
+  } else if (cookies) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false
+      }
+    };
   }
   return {
     props: {}
