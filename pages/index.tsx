@@ -40,21 +40,17 @@ export default function Home() {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const cookies = context.req.headers.cookie;
-  if (!cookies) {
-    return {
-      redirect: {
-        destination: "/signup",
-        permanent: false
-      }
-    };
-  } else if (cookies) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false
-      }
-    };
+  if (context.req) {
+    const cookies = context.req.headers.cookie;
+    const path = context.resolvedUrl;
+    if (!cookies && path === "/") {
+      return {
+        redirect: {
+          destination: "/signup",
+          permanent: false
+        }
+      };
+    }
   }
   return {
     props: {}

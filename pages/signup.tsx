@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import SignupComponent from "../components/SignupComponent";
+import cookie from "cookie";
+import { GetServerSideProps } from "next";
 
 const Layout = styled.div`
   display: flex;
@@ -17,7 +19,7 @@ const H1 = styled.div`
   padding-bottom: 30px;
 `;
 
-const Signup = () => {
+export const Signup = () => {
   return (
     <>
       <Layout>
@@ -26,6 +28,27 @@ const Signup = () => {
       </Layout>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  if (context.req) {
+    const cookies = context.req.headers.cookie;
+    const path = context.resolvedUrl;
+    if (cookies) {
+      const parsedCookies = cookie.parse(cookies);
+      if (parsedCookies.uid && path === "/signup") {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false
+          }
+        };
+      }
+    }
+  }
+  return {
+    props: {}
+  };
 };
 
 export default Signup;
