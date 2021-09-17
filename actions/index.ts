@@ -69,14 +69,16 @@ export const userCreationRequest = () => {
 export const addUserCredential = (
   name: string,
   email: string,
-  password: string
+  password: string,
+  checked: boolean
 ) => {
   return {
     type: "USER_CREDENTIAL_ADDED",
     payload: {
       name,
       email,
-      password
+      password,
+      checked
     }
   };
 };
@@ -142,19 +144,25 @@ export const deleteTaskRequest = (uniqueId: string) => {
   };
 };
 
-export const createUser = (name: string, email: string, password: string) => {
+export const createUser = (
+  name: string,
+  email: string,
+  password: string,
+  checked: boolean
+) => {
   return (dispatch: AppDispatch) => {
     dispatch(userCreationRequest());
     const url = "/api/users";
     const data = {
       name,
       email,
-      password
+      password,
+      checked
     };
     axios({ method: "post", url: url, data })
       .then(data => {
         if (data) {
-          dispatch(addUserCredential(name, email, password));
+          dispatch(addUserCredential(name, email, password, checked));
           dispatch(userCreationSuccess(data.data.uid));
         }
       })
