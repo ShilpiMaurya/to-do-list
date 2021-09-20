@@ -124,6 +124,7 @@ const LoginComponent = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [openAuthenticatingModal, setOpenAuthenticatingModal] = useState(false);
+
   const handleOnButtonClick = useCallback(() => {
     setOpenLoginModal(true);
   }, [openLoginModal]);
@@ -135,6 +136,7 @@ const LoginComponent = () => {
   }, [openLoginModal, email, password]);
 
   const handleLoginUpButtonClick = useCallback(() => {
+    console.log(localStorage.getItem("rememeberMe"), "local_storage_item");
     setOpenAuthenticatingModal(true);
   }, [openAuthenticatingModal]);
 
@@ -237,9 +239,9 @@ const LoginComponent = () => {
             </LoginButtonContainer>
           </DialogActions>
           <Footer>
-            <FooterText>Don't have an account ?</FooterText>
+            <FooterText>Do not have an account ?</FooterText>
             <FooterLink>
-              <a>Signup here</a>
+              <a href="/signup">Signup here</a>
             </FooterLink>
           </Footer>
         </LoginLayout>
