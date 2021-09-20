@@ -241,7 +241,7 @@ const LoginComponent = () => {
           <Footer>
             <FooterText>Do not have an account ?</FooterText>
             <FooterLink>
-              <a href="/signup">Signup here</a>
+              <a>Signup here</a>
             </FooterLink>
           </Footer>
         </LoginLayout>
