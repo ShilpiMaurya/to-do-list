@@ -29,7 +29,7 @@ const Box = styled.div`
   justify-content: center;
 `;
 
-export default function Home() {
+const Home = () => {
   return (
     <Container>
       <Box>
@@ -37,7 +37,7 @@ export default function Home() {
       </Box>
     </Container>
   );
-}
+};
 
 export const getServerSideProps: GetServerSideProps = async context => {
   if (context.req) {
@@ -56,3 +56,5 @@ export const getServerSideProps: GetServerSideProps = async context => {
     props: {}
   };
 };
+
+export default Home;

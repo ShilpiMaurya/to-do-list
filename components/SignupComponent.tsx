@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Link from "next/link";
 
 const ModalTitleBox = styled.div`
   color: var(--modal-secondary-color);
@@ -182,7 +183,12 @@ const SignupComponent = () => {
 
   return (
     <>
-      <button onClick={handleOnButtonClick}>SignUp</button>
+      <button
+        onClick={handleOnButtonClick}
+        style={{ fontSize: "20px", padding: "10px" }}
+      >
+        SignUp
+      </button>
       <Dialog
         open={openSignupModal}
         onClose={handleModalClose}
@@ -291,7 +297,9 @@ const SignupComponent = () => {
           <Footer>
             <FooterText>Have already an account ?</FooterText>
             <FooterLink>
-              <a>Login here</a>
+              <Link href="/login">
+                <a>Login here</a>
+              </Link>
             </FooterLink>
           </Footer>
         </SignUpBox>

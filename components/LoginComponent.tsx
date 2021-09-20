@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Link from "next/link";
 
 const CloseIconContainer = styled.div`
   display: flex;
@@ -153,7 +154,12 @@ const LoginComponent = () => {
     !(email && password) || !!(emailErrorMessage || passwordErrorMessage);
   return (
     <>
-      <button onClick={handleOnButtonClick}>Login</button>
+      <button
+        onClick={handleOnButtonClick}
+        style={{ fontSize: "20px", padding: "10px" }}
+      >
+        Login
+      </button>
       <Dialog
         open={openLoginModal}
         onClose={handleLoginModalClose}
@@ -241,7 +247,9 @@ const LoginComponent = () => {
           <Footer>
             <FooterText>Do not have an account ?</FooterText>
             <FooterLink>
-              <a>Signup here</a>
+              <Link href="/signup">
+                <a>Signup here</a>
+              </Link>
             </FooterLink>
           </Footer>
         </LoginLayout>
