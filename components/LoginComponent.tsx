@@ -4,7 +4,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
@@ -126,6 +126,14 @@ const LoginComponent = () => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [openAuthenticatingModal, setOpenAuthenticatingModal] = useState(false);
 
+  useEffect(() => {
+    if (localStorage) {
+      let checkedValue = localStorage.getItem("rememeberMe");
+      let booleanCheckedValue = checkedValue === "true" ? true : false;
+      setChecked(booleanCheckedValue);
+    }
+  }, []);
+
   const handleOnButtonClick = useCallback(() => {
     setOpenLoginModal(true);
   }, [openLoginModal]);
@@ -137,7 +145,6 @@ const LoginComponent = () => {
   }, [openLoginModal, email, password]);
 
   const handleLoginUpButtonClick = useCallback(() => {
-    console.log(localStorage.getItem("rememeberMe"), "local_storage_item");
     setOpenAuthenticatingModal(true);
   }, [openAuthenticatingModal]);
 
