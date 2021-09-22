@@ -4,18 +4,31 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import CloseIcon from "@material-ui/icons/Close";
-import { createUser } from "../actions/index";
-import { AppDispatch } from "../store";
-import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { useRouter } from "next/router";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Link from "next/link";
+
+const CloseIconContainer = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  padding-top: 10px;
+  padding-right: 10px;
+`;
+
+const CloseIconButton = styled.div`
+  cursor: pointer;
+`;
+
+const LoginLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px 30px 30px;
+`;
 
 const ModalTitleBox = styled.div`
   color: var(--modal-secondary-color);
@@ -24,14 +37,16 @@ const ModalTitleBox = styled.div`
   padding-bottom: 10px;
 `;
 
-const SignUpBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 20px 30px 30px 30px;
-`;
-
 const ModalContent = styled.div`
   width: 100%;
+`;
+
+const ErrorMessageContainer = styled.div`
+  height: 20px;
+`;
+
+const ErrorMessage = styled.div`
+  color: var(--modal-error-color);
 `;
 
 const CheckBoxContainer = styled.div`
@@ -67,26 +82,7 @@ const FooterLink = styled.div`
   cursor: pointer;
 `;
 
-const CloseIconContainer = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  padding-top: 10px;
-  padding-right: 10px;
-`;
-
-const CloseIconButton = styled.div`
-  cursor: pointer;
-`;
-
-const ErrorMessageContainer = styled.div`
-  height: 20px;
-`;
-
-const ErrorMessage = styled.div`
-  color: var(--modal-error-color);
-`;
-
-const SignUpButtonContainer = styled.div`
+const LoginButtonContainer = styled.div`
   display: flex;
   width: 100%;
   margin: 15px 20px 5px 20px;
@@ -120,51 +116,37 @@ const useStyles = makeStyles({
   }
 });
 
-const SignupComponent = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const router = useRouter();
+const LoginComponent = () => {
   const classes = useStyles();
-  const [name, setName] = useState("");
+  const [openLoginModal, setOpenLoginModal] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [nameErrorMessage, setNameErrorMessage] = useState("");
+  const [checked, setChecked] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
-  const [checked, setChecked] = useState(false);
-  const [openSignupModal, setOpenSignupModal] = useState(false);
-  const [openLoadingModal, setOpenLoadingModal] = useState(false);
-  const uniqueUserId = useSelector(
-    (state: RootStateOrAny) => state.todoReducers.uniqueUserId.uniqueUserId
-  );
-  if (uniqueUserId) {
-    router.push("/");
-  }
-  const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const disabled =
-    !(name && email && password) ||
-    !!(nameErrorMessage || emailErrorMessage || passwordErrorMessage);
+  const [openAuthenticatingModal, setOpenAuthenticatingModal] = useState(false);
+
+  useEffect(() => {
+    if (localStorage) {
+      let checkedValue = localStorage.getItem("rememeberMe");
+      let booleanCheckedValue = checkedValue === "true" ? true : false;
+      setChecked(booleanCheckedValue);
+    }
+  }, []);
 
   const handleOnButtonClick = useCallback(() => {
-    setOpenSignupModal(true);
-  }, [openSignupModal]);
+    setOpenLoginModal(true);
+  }, [openLoginModal]);
 
-  const handleModalClose = useCallback(() => {
-    setOpenSignupModal(false),
-      setName(""),
-      setPassword(""),
-      setEmail(""),
-      setNameErrorMessage(""),
-      setEmailErrorMessage(""),
-      setPasswordErrorMessage("");
-  }, [
-    openSignupModal,
-    name,
-    password,
-    email,
-    nameErrorMessage,
-    emailErrorMessage,
-    passwordErrorMessage
-  ]);
+  const handleLoginModalClose = useCallback(() => {
+    setOpenLoginModal(false);
+    setEmail("");
+    setPassword("");
+  }, [openLoginModal, email, password]);
+
+  const handleLoginUpButtonClick = useCallback(() => {
+    setOpenAuthenticatingModal(true);
+  }, [openAuthenticatingModal]);
 
   const handleCheckboxChange = useCallback(
     e => {
@@ -173,58 +155,33 @@ const SignupComponent = () => {
     [checked]
   );
 
-  const handleSignUpButtonClick = useCallback(() => {
-    if (name && email && password) {
-      dispatch(createUser(name, email, password, checked));
-    }
-    localStorage.setItem("rememeberMe", checked ? "true" : "false");
-    setOpenLoadingModal(true);
-  }, [name, password, email, openLoadingModal, checked]);
+  const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+  const disabled =
+    !(email && password) || !!(emailErrorMessage || passwordErrorMessage);
   return (
     <>
       <button
         onClick={handleOnButtonClick}
         style={{ fontSize: "20px", padding: "10px" }}
       >
-        SignUp
+        Login
       </button>
       <Dialog
-        open={openSignupModal}
-        onClose={handleModalClose}
+        open={openLoginModal}
+        onClose={handleLoginModalClose}
         aria-labelledby="form-dialog-title"
         maxWidth="xs"
         fullWidth={true}
       >
         <CloseIconContainer>
           <CloseIconButton>
-            <CloseIcon color="primary" onClick={handleModalClose} />
+            <CloseIcon color="primary" onClick={handleLoginModalClose} />
           </CloseIconButton>
         </CloseIconContainer>
-        <SignUpBox>
-          <ModalTitleBox>Create Account</ModalTitleBox>
+        <LoginLayout>
+          <ModalTitleBox>Log in to your account</ModalTitleBox>
           <ModalContent>
-            <TextField
-              margin="dense"
-              label="Name"
-              type="name"
-              fullWidth
-              value={name}
-              onChange={event => setName(event.target.value)}
-              onBlur={event => {
-                const input = event.target.value;
-                if (!input.length) {
-                  setNameErrorMessage("Please, enter a valid name");
-                } else {
-                  setNameErrorMessage("");
-                }
-              }}
-            />
-            <ErrorMessageContainer>
-              {!!nameErrorMessage && (
-                <ErrorMessage>{nameErrorMessage}</ErrorMessage>
-              )}
-            </ErrorMessageContainer>
             <TextField
               margin="dense"
               label="Email Address"
@@ -282,37 +239,37 @@ const SignupComponent = () => {
             </CheckBoxContainer>
           </ModalContent>
           <DialogActions>
-            <SignUpButtonContainer>
+            <LoginButtonContainer>
               <Button
                 color="primary"
                 variant="contained"
                 disabled={disabled}
-                onClick={handleSignUpButtonClick}
+                onClick={handleLoginUpButtonClick}
                 fullWidth
               >
-                SignUp
+                Continue
               </Button>
-            </SignUpButtonContainer>
+            </LoginButtonContainer>
           </DialogActions>
           <Footer>
-            <FooterText>Have already an account ?</FooterText>
+            <FooterText>Do not have an account ?</FooterText>
             <FooterLink>
-              <Link href="/login">
-                <a>Login here</a>
+              <Link href="/signup">
+                <a>Signup here</a>
               </Link>
             </FooterLink>
           </Footer>
-        </SignUpBox>
+        </LoginLayout>
       </Dialog>
       <Modal
         className={classes.modal}
-        open={openLoadingModal}
+        open={openAuthenticatingModal}
         BackdropComponent={Backdrop}
       >
-        <Fade in={openLoadingModal}>
+        <Fade in={openAuthenticatingModal}>
           <PopupLayout>
             <CircularProgress style={{ color: "white" }} />
-            <LoadingText>Please wait...</LoadingText>
+            <LoadingText>Authenticating...</LoadingText>
           </PopupLayout>
         </Fade>
       </Modal>
@@ -320,4 +277,4 @@ const SignupComponent = () => {
   );
 };
 
-export default SignupComponent;
+export default LoginComponent;

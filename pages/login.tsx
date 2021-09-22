@@ -1,7 +1,5 @@
+import LoginComponent from "../components/LoginComponent";
 import styled from "styled-components";
-import SignupComponent from "../components/SignupComponent";
-import cookie from "cookie";
-import { GetServerSideProps } from "next";
 import Link from "next/link";
 
 const Layout = styled.div`
@@ -33,16 +31,16 @@ const LinkContainer = styled.div`
   padding-top: 60px;
 `;
 
-const Signup = () => {
+const Login = () => {
   return (
     <>
       <Layout>
-        <H1>Welcome to to-do list app</H1>
-        <H2>Create new account</H2>
-        <SignupComponent />
+        <H1>Welcome back to to-do list app</H1>
+        <H2>Login to your account</H2>
+        <LoginComponent />
         <LinkContainer>
-          <H2>Already have a account</H2>
-          <Link href="/login">
+          <H2>Do not have an account</H2>
+          <Link href="/signup">
             <a
               style={{
                 textDecoration: "underline",
@@ -50,7 +48,7 @@ const Signup = () => {
                 fontSize: "25px"
               }}
             >
-              Login
+              Signup
             </a>
           </Link>
         </LinkContainer>
@@ -59,25 +57,4 @@ const Signup = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async context => {
-  if (context.req) {
-    const cookies = context.req.headers.cookie;
-    const path = context.resolvedUrl;
-    if (cookies) {
-      const parsedCookies = cookie.parse(cookies);
-      if (parsedCookies.uid && path === "/signup") {
-        return {
-          redirect: {
-            destination: "/",
-            permanent: false
-          }
-        };
-      }
-    }
-  }
-  return {
-    props: {}
-  };
-};
-
-export default Signup;
+export default Login;
