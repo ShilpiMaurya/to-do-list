@@ -97,6 +97,41 @@ export const userCreationFailure = (error: string) => {
   };
 };
 
+export const userLoginRequest = () => {
+  return {
+    type: "USER_LOGIN_REQUEST_CREATED"
+  };
+};
+
+export const addUserLoginCredentials = (
+  userEmail: string,
+  userPassword: string,
+  isUserChecked: boolean
+) => {
+  return {
+    type: "ADDED_USER_LOGIN_CREDENTIALS",
+    payload: {
+      userEmail,
+      userPassword,
+      isUserChecked
+    }
+  };
+};
+
+export const userLoginSuccess = (uniqueUserLoginId: string) => {
+  return {
+    type: "USER_LOGIN_SUCCEED",
+    payload: { uniqueUserLoginId }
+  };
+};
+
+export const userLoginFailure = (error: string) => {
+  return {
+    type: "USER_LOGIN_FAILED",
+    payload: { error }
+  };
+};
+
 export const createTask = (
   taskTitle: string,
   description: string,
@@ -168,6 +203,31 @@ export const createUser = (
       })
       .catch(error => {
         dispatch(userCreationFailure(error.message));
+      });
+  };
+};
+
+export const loginUser = (
+  userEmail: string,
+  userPassword: string,
+  isUserChecked: boolean
+) => {
+  return (dispatch: AppDispatch) => {
+    dispatch(userLoginRequest());
+    const url = "/api/login";
+    const data = { userEmail, userPassword, isUserChecked };
+
+    axios({ method: "post", url: url, data })
+      .then(data => {
+        if (data) {
+          dispatch(
+            addUserLoginCredentials(userEmail, userPassword, isUserChecked)
+          );
+          dispatch(userLoginSuccess(data.data.uid));
+        }
+      })
+      .catch(error => {
+        dispatch(userLoginFailure(error.message));
       });
   };
 };
