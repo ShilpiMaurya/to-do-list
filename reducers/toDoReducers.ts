@@ -6,7 +6,11 @@ const initialData = {
   userLoading: false,
   userCredential: {},
   uniqueUserId: "",
-  userError: ""
+  userError: "",
+  userLoginLoading: false,
+  userLoginCredential: {},
+  uniqueUserLoginId: "",
+  userLoginError: ""
 };
 
 type Action = {
@@ -112,6 +116,33 @@ const toDoReducers = (state = initialData, action: Action | any) => {
       return {
         ...state,
         userError: action.payload
+      };
+    case "USER_LOGIN_REQUEST_CREATED":
+      return {
+        ...state,
+        userLoginLoading: true,
+        userLoginCredential: {},
+        uniqueUserLoginId: "",
+        userLoginError: ""
+      };
+    case "ADDED_USER_LOGIN_CREDENTIALS":
+      const { userEmail, userPassword, isUserChecked } = action.payload;
+      return {
+        ...state,
+        userLoginLoading: false,
+        userLoginCredential: { userEmail, userPassword, isUserChecked },
+        uniqueUserLoginId: "",
+        userLoginError: ""
+      };
+    case "USER_LOGIN_SUCCEED":
+      return {
+        ...state,
+        uniqueUserLoginId: action.payload
+      };
+    case "USER_LOGIN_FAILED":
+      return {
+        ...state,
+        userLoginError: action.payload
       };
     default:
       return state;

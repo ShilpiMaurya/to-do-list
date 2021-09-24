@@ -12,6 +12,10 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Link from "next/link";
+import { loginUser } from "../actions/index";
+import { AppDispatch } from "../store";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { useRouter } from "next/router";
 
 const CloseIconContainer = styled.div`
   display: flex;
@@ -117,7 +121,9 @@ const useStyles = makeStyles({
 });
 
 const LoginComponent = () => {
+  const dispatch: AppDispatch = useDispatch();
   const classes = useStyles();
+  const router = useRouter();
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -125,6 +131,13 @@ const LoginComponent = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [openAuthenticatingModal, setOpenAuthenticatingModal] = useState(false);
+  const uniqueUserLoginId = useSelector(
+    (state: RootStateOrAny) =>
+      state.todoReducers.uniqueUserLoginId.uniqueUserLoginId
+  );
+  if (uniqueUserLoginId) {
+    router.push("/");
+  }
 
   useEffect(() => {
     if (localStorage) {
@@ -145,8 +158,11 @@ const LoginComponent = () => {
   }, [openLoginModal, email, password]);
 
   const handleLoginUpButtonClick = useCallback(() => {
+    if (email && password) {
+      dispatch(loginUser(email, password, checked));
+    }
     setOpenAuthenticatingModal(true);
-  }, [openAuthenticatingModal]);
+  }, [email, password, checked, openAuthenticatingModal]);
 
   const handleCheckboxChange = useCallback(
     e => {

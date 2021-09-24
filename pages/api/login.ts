@@ -35,14 +35,14 @@ export default async function loginHandler(
 ) {
   try {
     const { method } = req;
-    const { email, password, checked } = req.body;
+    const { userEmail, userPassword, isUserChecked } = req.body;
 
     if (method === "POST") {
       const uniqueUserId = await firebase
         .auth()
-        .signInWithEmailAndPassword(email, password);
+        .signInWithEmailAndPassword(userEmail, userPassword);
 
-      if (checked === true) {
+      if (isUserChecked === true) {
         setCookie({ res }, "uid", `${uniqueUserId.user.uid}`, {
           maxAge: 30 * 24 * 60 * 60,
           httpOnly: true,
