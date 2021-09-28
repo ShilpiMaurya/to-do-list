@@ -17,10 +17,11 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
     const cookies = appContext.ctx.req.headers.cookie;
     const path = appContext.ctx.pathname;
     const response = appContext.ctx.res;
+    let uidCookie: string | null = null;
 
     if (cookies) {
-      const parsedCookies = cookie.parse(cookies).uid;
-      if (parsedCookies && (path === "/login" || path === "/signup")) {
+      uidCookie = cookie.parse(cookies).uid;
+      if (uidCookie && (path === "/login" || path === "/signup")) {
         response.writeHead(302, {
           Location: "/"
         });
@@ -28,7 +29,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
       }
     }
 
-    if (!cookies && path === "/") {
+    if (!uidCookie && path === "/") {
       response.writeHead(302, {
         Location: "/signup"
       });
