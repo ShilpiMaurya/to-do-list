@@ -1,8 +1,6 @@
 import LoginComponent from "../components/LoginComponent";
 import styled from "styled-components";
 import Link from "next/link";
-import cookie from "cookie";
-import { GetServerSideProps } from "next";
 
 const Layout = styled.div`
   display: flex;
@@ -57,27 +55,6 @@ const Login = () => {
       </Layout>
     </>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async context => {
-  if (context.req) {
-    const cookies = context.req.headers.cookie;
-    const path = context.resolvedUrl;
-    if (cookies) {
-      const parsedCookies = cookie.parse(cookies);
-      if (parsedCookies.uid && path === "/login") {
-        return {
-          redirect: {
-            destination: "/",
-            permanent: false
-          }
-        };
-      }
-    }
-  }
-  return {
-    props: {}
-  };
 };
 
 export default Login;
