@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import ToDoListItems from "../components/ToDoListItems";
-import { GetServerSideProps } from "next";
 
 const Container = styled.div`
   display: flex;
@@ -37,24 +36,6 @@ const Home = () => {
       </Box>
     </Container>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async context => {
-  if (context.req) {
-    const cookies = context.req.headers.cookie;
-    const path = context.resolvedUrl;
-    if (!cookies && path === "/") {
-      return {
-        redirect: {
-          destination: "/signup",
-          permanent: false
-        }
-      };
-    }
-  }
-  return {
-    props: {}
-  };
 };
 
 export default Home;

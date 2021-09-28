@@ -44,11 +44,18 @@ export default async function loginHandler(
 
       if (isUserChecked === true) {
         setCookie({ res }, "uid", `${uniqueUserId.user.uid}`, {
-          maxAge: 30 * 24 * 60 * 60,
+          maxAge: 12 * 30 * 24 * 60 * 60,
+          httpOnly: true,
+          path: "/"
+        });
+      } else {
+        setCookie({ res }, "uid", `${uniqueUserId.user.uid}`, {
+          maxAge: 24 * 60 * 60,
           httpOnly: true,
           path: "/"
         });
       }
+
       res.status(200).json({ uid: uniqueUserId.user.uid });
     } else {
       res.status(405).send("Method not allowed");

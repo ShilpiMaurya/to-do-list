@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import SignupComponent from "../components/SignupComponent";
-import cookie from "cookie";
-import { GetServerSideProps } from "next";
 import Link from "next/link";
 
 const Layout = styled.div`
@@ -41,7 +39,7 @@ const Signup = () => {
         <H2>Create new account</H2>
         <SignupComponent />
         <LinkContainer>
-          <H2>Already have a account</H2>
+          <H2>Already have an account</H2>
           <Link href="/login">
             <a
               style={{
@@ -57,27 +55,6 @@ const Signup = () => {
       </Layout>
     </>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async context => {
-  if (context.req) {
-    const cookies = context.req.headers.cookie;
-    const path = context.resolvedUrl;
-    if (cookies) {
-      const parsedCookies = cookie.parse(cookies);
-      if (parsedCookies.uid && path === "/signup") {
-        return {
-          redirect: {
-            destination: "/",
-            permanent: false
-          }
-        };
-      }
-    }
-  }
-  return {
-    props: {}
-  };
 };
 
 export default Signup;

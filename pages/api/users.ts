@@ -30,13 +30,21 @@ export default async function handler(
         password,
         displayName
       });
+
       if (checked === true) {
         setCookie({ res }, "uid", `${uniqueUserId.uid}`, {
-          maxAge: 30 * 24 * 60 * 60,
+          maxAge: 12 * 30 * 24 * 60 * 60,
+          httpOnly: true,
+          path: "/"
+        });
+      } else {
+        setCookie({ res }, "uid", `${uniqueUserId.uid}`, {
+          maxAge: 24 * 60 * 60,
           httpOnly: true,
           path: "/"
         });
       }
+
       res.status(200).json({ uid: uniqueUserId.uid });
     } else {
       res.status(405).send("Method not allowed");
