@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+const { parseCookies } = require("nookies");
 const admin = require("firebase-admin");
 const serviceAccount = process.env.NEXT_PUBLIC_FIREBASE_SERVICE_ACCOUNT;
 
@@ -20,7 +21,10 @@ export default async function handler(
 ) {
   try {
     const { body, method } = req;
-    if (method === "POST") {
+    const parsedCookies = parseCookies({ req });
+    const uidCookie = parsedCookies.uid;
+
+    if (method === "POST" && uidCookie) {
       const {
         taskTitle,
         description,
@@ -29,7 +33,8 @@ export default async function handler(
         status,
         priority
       } = body;
-      const docRef = await db.collection("tasks").add({
+
+      const docRef = await db.collection(`${uidCookie}`).add({
         taskTitle,
         description,
         startDate,
@@ -38,6 +43,14 @@ export default async function handler(
         priority
       });
       res.status(200).json({ uniqueId: docRef.id });
+    } else if (method === "GET" && uidCookie) {
+      let taskList: {}[] = [];
+      const tasks = db.collection(`${uidCookie}`);
+      const snapshot = await tasks.get();
+      snapshot.forEach((doc: any) => {
+        taskList.push(doc.data());
+      });
+      res.status(200).json(taskList);
     } else {
       res.status(405).send("Method not allowed");
     }
