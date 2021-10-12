@@ -10,7 +10,10 @@ const initialData = {
   userLoginLoading: false,
   userLoginCredential: {},
   uniqueUserLoginId: "",
-  userLoginError: ""
+  userLoginError: "",
+  userTasksLoading: false,
+  userTasksList: [],
+  userTasksError: ""
 };
 
 type Action = {
@@ -143,6 +146,24 @@ const toDoReducers = (state = initialData, action: Action | any) => {
       return {
         ...state,
         userLoginError: action.payload
+      };
+    case "FETCH_USER_TASKS_REQUEST":
+      return {
+        ...state,
+        userTasksLoading: true,
+        userTasksList: [],
+        userTasksError: ""
+      };
+    case "FETCH_USER_TASKS_SUCCESS":
+      return {
+        ...state,
+        userTasksLoading: false,
+        userTasksList: action.payload
+      };
+    case "FETCH_USER_TASKS_FAILURE":
+      return {
+        ...state,
+        userTasksError: action.payload
       };
     default:
       return state;

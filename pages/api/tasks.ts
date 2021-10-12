@@ -23,7 +23,6 @@ export default async function handler(
     const { body, method } = req;
     const parsedCookies = parseCookies({ req });
     const uidCookie = parsedCookies.uid;
-
     if (method === "POST" && uidCookie) {
       const {
         taskTitle,

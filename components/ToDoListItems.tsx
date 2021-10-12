@@ -1,4 +1,9 @@
-import { deleteTaskItem, removeAll, deleteTaskRequest } from "../actions/index";
+import {
+  deleteTaskItem,
+  removeAll,
+  deleteTaskRequest,
+  fetchUserTasks
+} from "../actions/index";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Heading from "./Heading";
@@ -10,6 +15,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { AppDispatch } from "../store";
+import { useEffect } from "react";
 
 const ToDoListItemsBox = styled.div`
   display: flex;
@@ -57,6 +63,10 @@ const ToDoList = () => {
   const taskId = useSelector(
     (state: RootStateOrAny) => state.todoReducers.uniqueTaskId.uniqueId
   );
+
+  useEffect(() => {
+    dispatch(fetchUserTasks());
+  }, []);
 
   return (
     <ToDoListItemsBox>

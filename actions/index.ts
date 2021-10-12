@@ -132,6 +132,26 @@ export const userLoginFailure = (error: string) => {
   };
 };
 
+export const fetchUserTasksRequest = () => {
+  return {
+    type: "FETCH_USER_TASKS_REQUEST"
+  };
+};
+
+export const fetchUserTasksSuccess = (tasks: {}[]) => {
+  return {
+    type: "FETCH_USER_TASKS_SUCCESS",
+    payload: { tasks }
+  };
+};
+
+export const fetchUserTasksFailure = (error: string) => {
+  return {
+    type: "FETCH_USER_TASKS_FAILURE",
+    payload: { error }
+  };
+};
+
 export const createTask = (
   taskTitle: string,
   description: string,
@@ -228,6 +248,22 @@ export const loginUser = (
       })
       .catch(error => {
         dispatch(userLoginFailure(error.message));
+      });
+  };
+};
+
+export const fetchUserTasks = () => {
+  return (dispatch: AppDispatch) => {
+    dispatch(fetchUserTasksRequest());
+    axios
+      .get("/api/tasks")
+      .then(response => {
+        const tasks = response.data;
+        dispatch(fetchUserTasksSuccess(tasks));
+      })
+      .catch(error => {
+        const errorMessage = error.message;
+        dispatch(fetchUserTasksFailure(errorMessage));
       });
   };
 };
