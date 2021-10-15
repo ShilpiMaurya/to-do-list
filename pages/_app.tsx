@@ -27,13 +27,13 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
         });
         response.end();
       }
+    }
 
-      if (!uidCookie && path === "/") {
-        response.writeHead(302, {
-          Location: "/signup"
-        });
-        response.end();
-      }
+    if (!uidCookie && path === "/") {
+      response.writeHead(302, {
+        Location: "/login"
+      });
+      response.end();
     }
   }
   return {};

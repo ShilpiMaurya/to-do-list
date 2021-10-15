@@ -54,6 +54,16 @@ type Item = {
   statusData: string;
 };
 
+type TaskItem = {
+  id: string;
+  taskTitle: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  priority: string;
+  status: string;
+};
+
 const ToDoList = () => {
   const list = useSelector((state: RootStateOrAny) => state.todoReducers.list);
   const dispatch: AppDispatch = useDispatch();
@@ -67,6 +77,10 @@ const ToDoList = () => {
   useEffect(() => {
     dispatch(fetchUserTasks());
   }, []);
+
+  const tasks = useSelector(
+    (state: RootStateOrAny) => state.todoReducers.userTasksList.tasks
+  );
 
   return (
     <ToDoListItemsBox>
@@ -141,6 +155,72 @@ const ToDoList = () => {
               </TableCell>
             </TableRow>
           </TableHead>
+          {tasks &&
+            tasks.map((element: TaskItem, index: number) => {
+              return (
+                <TableBody key={index}>
+                  <TableRow>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.taskTitle}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.description}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.startDate}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.endDate}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.priority}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.status}
+                    </TableCell>
+                    <DeleteIcon
+                      style={{
+                        fontSize: "30px",
+                        color: "white",
+                        cursor: "pointer",
+                        marginTop: "10px",
+                        marginLeft: "5px"
+                      }}
+                    />
+                  </TableRow>
+                </TableBody>
+              );
+            })}
           {list.map((element: Item, index: number) => {
             return (
               <TableBody key={index}>

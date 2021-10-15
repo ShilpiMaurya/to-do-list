@@ -43,13 +43,25 @@ export default async function handler(
       });
       res.status(200).json({ uniqueId: docRef.id });
     } else if (method === "GET" && uidCookie) {
-      let taskList: {}[] = [];
+      let taskList: Array<{
+        endDate: string;
+        status: string;
+        priority: string;
+        description: string;
+        startDate: string;
+        taskTitle: string;
+      }> = [];
       const tasks = db.collection(`${uidCookie}`);
       const snapshot = await tasks.get();
       snapshot.forEach((doc: any) => {
         taskList.push(doc.data());
       });
       res.status(200).json(taskList);
+    } else if (
+      (method === "GET" && !uidCookie) ||
+      (method === "POST" && !uidCookie)
+    ) {
+      res.status(401).send("Unauthorized Request");
     } else {
       res.status(405).send("Method not allowed");
     }
