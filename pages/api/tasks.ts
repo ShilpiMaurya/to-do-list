@@ -15,6 +15,7 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -24,8 +25,12 @@ export default async function handler(
     const parsedCookies = parseCookies({ req });
     const uidCookie = parsedCookies.uid;
 
-    if (method === "POST") {
-      if (uidCookie) {
+    if (method === "POST" || method === "GET") {
+      if (!uidCookie) {
+        res.status(401).send("Unauthorized Request");
+      }
+
+      if (method === "POST") {
         const {
           taskTitle,
           description,
@@ -44,13 +49,9 @@ export default async function handler(
           priority
         });
         res.status(200).json({ uniqueId: docRef.id });
-      } else {
-        res.status(401).send("Unauthorized Request");
       }
-    }
 
-    if (method === "GET") {
-      if (uidCookie) {
+      if (method === "GET") {
         let taskList: Array<{
           endDate: string;
           status: string;
@@ -66,11 +67,10 @@ export default async function handler(
           taskList.push(doc.data());
         });
         res.status(200).json(taskList);
-      } else {
-        res.status(401).send("Unauthorized Request");
       }
+    } else {
+      res.status(405).send("Method not allowed");
     }
-    res.status(405).send("Method not allowed");
   } catch (error) {
     res.status(500).send({ message: `${error.code} - ${error.message}` });
   }

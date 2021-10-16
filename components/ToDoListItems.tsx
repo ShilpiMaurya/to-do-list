@@ -1,6 +1,5 @@
 import {
   deleteTaskItem,
-  removeAll,
   deleteTaskRequest,
   fetchUserTasks
 } from "../actions/index";
@@ -16,20 +15,13 @@ import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { AppDispatch } from "../store";
 import { useEffect } from "react";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const ToDoListItemsBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
-`;
-
-const ButtonBox2 = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding-top: 25px;
-  padding-bottom: 25px;
-  justify-content: center;
 `;
 
 const TableContainer = styled.div`
@@ -155,7 +147,7 @@ const ToDoList = () => {
               </TableCell>
             </TableRow>
           </TableHead>
-          {tasks &&
+          {tasks ? (
             tasks.map((element: TaskItem, index: number) => {
               return (
                 <TableBody key={index}>
@@ -220,7 +212,14 @@ const ToDoList = () => {
                   </TableRow>
                 </TableBody>
               );
-            })}
+            })
+          ) : (
+            <SkeletonTheme color="#B8B8B8" highlightColor="#D0D0D0">
+              <div style={{ fontSize: 15, lineHeight: 3 }}>
+                <Skeleton height={20} count={3} style={{ width: "100vw" }} />
+              </div>
+            </SkeletonTheme>
+          )}
           {list.map((element: Item, index: number) => {
             return (
               <TableBody key={index}>
@@ -292,9 +291,6 @@ const ToDoList = () => {
           })}
         </Table>
       </TableContainer>
-      <ButtonBox2>
-        <button onClick={() => dispatch(removeAll())}>Remove List</button>
-      </ButtonBox2>
     </ToDoListItemsBox>
   );
 };
