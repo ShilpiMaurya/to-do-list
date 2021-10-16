@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+const { parseCookies } = require("nookies");
 const admin = require("firebase-admin");
 const serviceAccount = process.env.NEXT_PUBLIC_FIREBASE_SERVICE_ACCOUNT;
 
@@ -14,30 +15,59 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
     const { body, method } = req;
-    if (method === "POST") {
-      const {
-        taskTitle,
-        description,
-        startDate,
-        endDate,
-        status,
-        priority
-      } = body;
-      const docRef = await db.collection("tasks").add({
-        taskTitle,
-        description,
-        startDate,
-        endDate,
-        status,
-        priority
-      });
-      res.status(200).json({ uniqueId: docRef.id });
+    const parsedCookies = parseCookies({ req });
+    const uidCookie = parsedCookies.uid;
+
+    if (method === "POST" || method === "GET") {
+      if (!uidCookie) {
+        res.status(401).send("Unauthorized Request");
+      }
+
+      if (method === "POST") {
+        const {
+          taskTitle,
+          description,
+          startDate,
+          endDate,
+          status,
+          priority
+        } = body;
+
+        const docRef = await db.collection(`${uidCookie}`).add({
+          taskTitle,
+          description,
+          startDate,
+          endDate,
+          status,
+          priority
+        });
+        res.status(200).json({ uniqueId: docRef.id });
+      }
+
+      if (method === "GET") {
+        let taskList: Array<{
+          endDate: string;
+          status: string;
+          priority: string;
+          description: string;
+          startDate: string;
+          taskTitle: string;
+        }> = [];
+
+        const tasks = db.collection(`${uidCookie}`);
+        const snapshot = await tasks.get();
+        snapshot.forEach((doc: any) => {
+          taskList.push(doc.data());
+        });
+        res.status(200).json(taskList);
+      }
     } else {
       res.status(405).send("Method not allowed");
     }

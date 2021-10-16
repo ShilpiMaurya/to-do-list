@@ -1,4 +1,8 @@
-import { deleteTaskItem, removeAll, deleteTaskRequest } from "../actions/index";
+import {
+  deleteTaskItem,
+  deleteTaskRequest,
+  fetchUserTasks
+} from "../actions/index";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Heading from "./Heading";
@@ -10,20 +14,14 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { AppDispatch } from "../store";
+import { useEffect } from "react";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const ToDoListItemsBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
-`;
-
-const ButtonBox2 = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding-top: 25px;
-  padding-bottom: 25px;
-  justify-content: center;
 `;
 
 const TableContainer = styled.div`
@@ -48,6 +46,16 @@ type Item = {
   statusData: string;
 };
 
+type TaskItem = {
+  id: string;
+  taskTitle: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  priority: string;
+  status: string;
+};
+
 const ToDoList = () => {
   const list = useSelector((state: RootStateOrAny) => state.todoReducers.list);
   const dispatch: AppDispatch = useDispatch();
@@ -56,6 +64,14 @@ const ToDoList = () => {
   );
   const taskId = useSelector(
     (state: RootStateOrAny) => state.todoReducers.uniqueTaskId.uniqueId
+  );
+
+  useEffect(() => {
+    dispatch(fetchUserTasks());
+  }, []);
+
+  const tasks = useSelector(
+    (state: RootStateOrAny) => state.todoReducers.userTasksList.tasks
   );
 
   return (
@@ -131,6 +147,79 @@ const ToDoList = () => {
               </TableCell>
             </TableRow>
           </TableHead>
+          {tasks ? (
+            tasks.map((element: TaskItem, index: number) => {
+              return (
+                <TableBody key={index}>
+                  <TableRow>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.taskTitle}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.description}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.startDate}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.endDate}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.priority}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "white",
+                        padding: "15px 5px"
+                      }}
+                    >
+                      {element.status}
+                    </TableCell>
+                    <DeleteIcon
+                      style={{
+                        fontSize: "30px",
+                        color: "white",
+                        cursor: "pointer",
+                        marginTop: "10px",
+                        marginLeft: "5px"
+                      }}
+                    />
+                  </TableRow>
+                </TableBody>
+              );
+            })
+          ) : (
+            <SkeletonTheme color="#B8B8B8" highlightColor="#D0D0D0">
+              <div style={{ fontSize: 15, lineHeight: 3 }}>
+                <Skeleton height={20} count={3} style={{ width: "100vw" }} />
+              </div>
+            </SkeletonTheme>
+          )}
           {list.map((element: Item, index: number) => {
             return (
               <TableBody key={index}>
@@ -202,9 +291,6 @@ const ToDoList = () => {
           })}
         </Table>
       </TableContainer>
-      <ButtonBox2>
-        <button onClick={() => dispatch(removeAll())}>Remove List</button>
-      </ButtonBox2>
     </ToDoListItemsBox>
   );
 };

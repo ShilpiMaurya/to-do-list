@@ -31,7 +31,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 
     if (!uidCookie && path === "/") {
       response.writeHead(302, {
-        Location: "/signup"
+        Location: "/login"
       });
       response.end();
     }

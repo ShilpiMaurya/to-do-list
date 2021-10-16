@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+const { parseCookies } = require("nookies");
 const admin = require("firebase-admin");
 const serviceAccount = process.env.NEXT_PUBLIC_FIREBASE_SERVICE_ACCOUNT;
 
@@ -21,9 +22,12 @@ export default async function deleteHandler(
   try {
     const { taskId } = req.query;
     const { method } = req;
-    if (method === "DELETE") {
+    const parsedCookies = parseCookies({ req });
+    const uidCookie = parsedCookies.uid;
+
+    if (method === "DELETE" && uidCookie) {
       await db
-        .collection("tasks")
+        .collection(`${uidCookie}`)
         .doc(taskId)
         .delete();
       res.status(200).send("Successfully deleted a document");
