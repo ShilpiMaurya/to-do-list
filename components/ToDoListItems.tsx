@@ -47,7 +47,7 @@ type Item = {
 };
 
 type TaskItem = {
-  id: string;
+  taskId: string;
   taskTitle: string;
   description: string;
   startDate: string;
@@ -216,6 +216,10 @@ const ToDoList = () => {
                         cursor: "pointer",
                         marginTop: "10px",
                         marginLeft: "5px"
+                      }}
+                      onClick={() => {
+                        dispatch(deleteTaskItem(element.taskId));
+                        dispatch(deleteTaskRequest(element.taskId));
                       }}
                     />
                   </TableRow>
