@@ -116,7 +116,7 @@ const InputData = () => {
       <ModalButtonContainer>
         <button
           onClick={handleClickOpen}
-          style={{ marginRight: "30px", marginBottom: "20px" }}
+          style={{ marginRight: "30px", marginBottom: "10px" }}
         >
           Create New Task +
         </button>

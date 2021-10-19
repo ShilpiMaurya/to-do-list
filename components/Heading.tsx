@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 
 const HeadingContainer = styled.div`
   display: flex;
@@ -25,14 +24,6 @@ const Heading = () => {
     <>
       <HeadingContainer>
         <HeadingBox>To-Do List</HeadingBox>
-        <FormatListBulletedIcon
-          fontSize="large"
-          style={{
-            marginTop: "11px",
-            marginLeft: "6px",
-            color: "white"
-          }}
-        />
       </HeadingContainer>
     </>
   );
