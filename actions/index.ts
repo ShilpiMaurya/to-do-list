@@ -199,6 +199,13 @@ export const deleteTaskRequest = (uniqueId: string) => {
   };
 };
 
+export const deleteCookie = () => {
+  return () => {
+    const url = `/api/logout`;
+    axios.delete(url);
+  };
+};
+
 export const createUser = (
   name: string,
   email: string,
