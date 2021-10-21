@@ -32,6 +32,15 @@ export const deleteTaskItem = (id: string) => {
   };
 };
 
+export const deleteFetchedTaskItem = (taskId: string) => {
+  return {
+    type: "FETCHED_TASK_ITEM_DELETED",
+    payload: {
+      taskId
+    }
+  };
+};
+
 export const removeAll = () => {
   return {
     type: "REMOVE_ALL"
@@ -141,7 +150,7 @@ export const fetchUserTasksRequest = () => {
 export const fetchUserTasksSuccess = (tasks: {}[]) => {
   return {
     type: "FETCH_USER_TASKS_SUCCESS",
-    payload: { tasks }
+    payload: tasks
   };
 };
 

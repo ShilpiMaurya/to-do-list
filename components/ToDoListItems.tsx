@@ -2,7 +2,8 @@ import {
   deleteTaskItem,
   deleteTaskRequest,
   fetchUserTasks,
-  deleteCookie
+  deleteCookie,
+  deleteFetchedTaskItem
 } from "../actions/index";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -82,9 +83,8 @@ const ToDoList = () => {
   }, []);
 
   const tasks = useSelector(
-    (state: RootStateOrAny) => state.todoReducers.userTasksList.tasks
+    (state: RootStateOrAny) => state.todoReducers.userTasksList
   );
-
   return (
     <ToDoListItemsBox>
       <Heading />
@@ -227,7 +227,7 @@ const ToDoList = () => {
                         marginLeft: "5px"
                       }}
                       onClick={() => {
-                        dispatch(deleteTaskItem(element.taskId));
+                        dispatch(deleteFetchedTaskItem(element.taskId));
                         dispatch(deleteTaskRequest(element.taskId));
                       }}
                     />
