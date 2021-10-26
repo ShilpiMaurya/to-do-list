@@ -165,6 +165,11 @@ const toDoReducers = (state = initialData, action: Action | any) => {
         ...state,
         userTasksError: action.payload
       };
+    case "FETCHED_TASK_ITEM_DELETED":
+      const fetchedList = state.userTasksList.filter((item: any) => {
+        return item.taskId !== action.payload.taskId;
+      });
+      return { ...state, userTasksList: fetchedList };
     default:
       return state;
   }

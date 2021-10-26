@@ -1,7 +1,9 @@
 import {
   deleteTaskItem,
   deleteTaskRequest,
-  fetchUserTasks
+  fetchUserTasks,
+  deleteCookie,
+  deleteFetchedTaskItem
 } from "../actions/index";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -14,7 +16,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { AppDispatch } from "../store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const ToDoListItemsBox = styled.div`
@@ -36,6 +38,14 @@ const ErrorStateMessage = styled.div`
   color: red;
 `;
 
+const LogoutContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  text-align: center;
+  width: 100%;
+`;
+
 type Item = {
   id: string;
   taskTitleData: string;
@@ -47,7 +57,7 @@ type Item = {
 };
 
 type TaskItem = {
-  id: string;
+  taskId: string;
   taskTitle: string;
   description: string;
   startDate: string;
@@ -57,6 +67,7 @@ type TaskItem = {
 };
 
 const ToDoList = () => {
+  const [loading, setLoading] = useState(true);
   const list = useSelector((state: RootStateOrAny) => state.todoReducers.list);
   const dispatch: AppDispatch = useDispatch();
   const errorState = useSelector(
@@ -68,12 +79,12 @@ const ToDoList = () => {
 
   useEffect(() => {
     dispatch(fetchUserTasks());
+    setLoading(false);
   }, []);
 
   const tasks = useSelector(
-    (state: RootStateOrAny) => state.todoReducers.userTasksList.tasks
+    (state: RootStateOrAny) => state.todoReducers.userTasksList
   );
-
   return (
     <ToDoListItemsBox>
       <Heading />
@@ -147,7 +158,14 @@ const ToDoList = () => {
               </TableCell>
             </TableRow>
           </TableHead>
-          {tasks ? (
+          {loading === true && (
+            <SkeletonTheme color="#B8B8B8" highlightColor="#D0D0D0">
+              <div style={{ fontSize: 15, lineHeight: 3 }}>
+                <Skeleton height={20} count={3} style={{ width: "100vw" }} />
+              </div>
+            </SkeletonTheme>
+          )}
+          {tasks &&
             tasks.map((element: TaskItem, index: number) => {
               return (
                 <TableBody key={index}>
@@ -208,18 +226,15 @@ const ToDoList = () => {
                         marginTop: "10px",
                         marginLeft: "5px"
                       }}
+                      onClick={() => {
+                        dispatch(deleteFetchedTaskItem(element.taskId));
+                        dispatch(deleteTaskRequest(element.taskId));
+                      }}
                     />
                   </TableRow>
                 </TableBody>
               );
-            })
-          ) : (
-            <SkeletonTheme color="#B8B8B8" highlightColor="#D0D0D0">
-              <div style={{ fontSize: 15, lineHeight: 3 }}>
-                <Skeleton height={20} count={3} style={{ width: "100vw" }} />
-              </div>
-            </SkeletonTheme>
-          )}
+            })}
           {list.map((element: Item, index: number) => {
             return (
               <TableBody key={index}>
@@ -291,6 +306,18 @@ const ToDoList = () => {
           })}
         </Table>
       </TableContainer>
+      <LogoutContainer>
+        <button
+          onClick={() => dispatch(deleteCookie())}
+          style={{
+            marginRight: "30px",
+            marginBottom: "20px",
+            marginTop: "10px"
+          }}
+        >
+          Log Out
+        </button>
+      </LogoutContainer>
     </ToDoListItemsBox>
   );
 };

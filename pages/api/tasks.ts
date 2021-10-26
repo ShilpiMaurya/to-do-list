@@ -53,6 +53,7 @@ export default async function handler(
 
       if (method === "GET") {
         let taskList: Array<{
+          taskId: string;
           endDate: string;
           status: string;
           priority: string;
@@ -64,7 +65,10 @@ export default async function handler(
         const tasks = db.collection(`${uidCookie}`);
         const snapshot = await tasks.get();
         snapshot.forEach((doc: any) => {
-          taskList.push(doc.data());
+          const tasks = doc.data();
+          const taskId = doc.id;
+          const data = { taskId, ...tasks };
+          taskList.push(data);
         });
         res.status(200).json(taskList);
       }
