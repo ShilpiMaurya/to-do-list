@@ -7,7 +7,7 @@ export default async function logoutHandler(
 ) {
   try {
     const { method } = req;
-    if (method === "DELETE") {
+    if (method === "GET") {
       setCookie({ res }, "uid", "", {
         maxAge: -1,
         path: "/",
