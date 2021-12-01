@@ -44,7 +44,6 @@ export default async function handler(
           path: "/"
         });
       }
-
       res.status(200).json({ uid: uniqueUserId.uid });
     } else {
       res.status(405).send("Method not allowed");
