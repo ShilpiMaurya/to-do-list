@@ -1,3 +1,4 @@
+import { deleteCookie } from "../actions/index";
 import styled from "styled-components";
 import { useState } from "react";
 import { createTask } from "../actions/index";
@@ -8,6 +9,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { AppDispatch } from "../store";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 
 const InputDataBox = styled.div`
   display: flex;
@@ -18,7 +21,7 @@ const InputDataBox = styled.div`
 const ModalTitleBox = styled.div`
   color: #3f51b5;
   font-size: 30px;
-  font-weight: 100;
+  font-weight: 300;
   padding-bottom: 10px;
 `;
 
@@ -83,6 +86,7 @@ const InputData = () => {
   const [priorityErrorMessage, setPriorityErrorMessage] = useState("");
   const [statusErrorMessage, setStatusErrorMessage] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [openLogoutModal, setOpenLogoutModal] = useState(false);
 
   const handleButtonClick = () => {
     if (taskTitle && startDate && endDate && priority && status) {
@@ -111,14 +115,28 @@ const InputData = () => {
     setStatusErrorMessage("");
   };
 
+  const handleLogoutClose = () => {
+    setOpenLogoutModal(false);
+  };
+
+  const handleLogoutOpen = () => {
+    setOpenLogoutModal(true);
+  };
+
   return (
     <>
       <ModalButtonContainer>
         <button
           onClick={handleClickOpen}
-          style={{ marginRight: "30px", marginBottom: "10px" }}
+          style={{ marginRight: "10px", marginBottom: "15px" }}
         >
           Create New Task +
+        </button>
+        <button
+          onClick={handleLogoutOpen}
+          style={{ marginRight: "10px", marginBottom: "15px" }}
+        >
+          Log Out
         </button>
       </ModalButtonContainer>
       <Dialog
@@ -346,6 +364,37 @@ const InputData = () => {
               </ButtonContainer>
             </DialogActions>
           </ModalContent>
+        </InputDataBox>
+      </Dialog>
+      <Dialog
+        open={openLogoutModal}
+        onClose={handleLogoutClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <InputDataBox>
+          <DialogContent>
+            <DialogContentText style={{ fontSize: "20px" }}>
+              Are you sure you want to log out?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleLogoutClose}
+              color="primary"
+              variant="contained"
+              style={{ marginLeft: "20px" }}
+            >
+              CANCEL
+            </Button>
+            <Button
+              onClick={() => dispatch(deleteCookie())}
+              color="primary"
+              variant="contained"
+              style={{ marginLeft: "20px" }}
+            >
+              LOG OUT
+            </Button>
+          </DialogActions>
         </InputDataBox>
       </Dialog>
     </>

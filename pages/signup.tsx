@@ -10,25 +10,42 @@ const Layout = styled.div`
   background: linear-gradient(45deg, #fc446b, #3f5efb);
   height: 100vh;
   width: 100vw;
+  @media (max-width: 480px) {
+    padding: 20px;
+  }
 `;
 
 const H1 = styled.div`
   color: white;
   font-size: 40px;
   padding-bottom: 50px;
+  text-align: center;
+  font-weight: 550;
+  @media (max-width: 480px) {
+    font-size: 35px;
+  }
 `;
 
 const H2 = styled.div`
-  font-size: 25px;
   color: white;
   padding-right: 10px;
   padding-bottom: 30px;
+  font-size: 25px;
+  @media (max-width: 480px) {
+    padding-bottom: 20px;
+    font-size: 20px;
+  }
 `;
 
 const LinkContainer = styled.div`
   display: flex;
   flex-display: row;
   padding-top: 60px;
+  font-size: 25px;
+  @media (max-width: 480px) {
+    padding-top: 50px;
+    font-size: 20px;
+  }
 `;
 
 const Signup = () => {
@@ -44,8 +61,7 @@ const Signup = () => {
             <a
               style={{
                 textDecoration: "underline",
-                color: "white",
-                fontSize: "25px"
+                color: "white"
               }}
             >
               Login
