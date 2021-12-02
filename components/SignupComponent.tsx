@@ -20,7 +20,7 @@ import Link from "next/link";
 const ModalTitleBox = styled.div`
   color: var(--modal-secondary-color);
   font-size: 30px;
-  font-weight: 100;
+  font-weight: 300;
   padding-bottom: 10px;
 `;
 
@@ -185,7 +185,7 @@ const SignupComponent = () => {
     <>
       <button
         onClick={handleOnButtonClick}
-        style={{ fontSize: "20px", padding: "10px" }}
+        style={{ fontSize: "18px", padding: "10px" }}
       >
         SignUp
       </button>

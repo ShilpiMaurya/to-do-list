@@ -2,7 +2,6 @@ import {
   deleteTaskItem,
   deleteTaskRequest,
   fetchUserTasks,
-  deleteCookie,
   deleteFetchedTaskItem
 } from "../actions/index";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
@@ -36,14 +35,6 @@ const ErrorStateContainer = styled.div`
 
 const ErrorStateMessage = styled.div`
   color: red;
-`;
-
-const LogoutContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  text-align: center;
-  width: 100%;
 `;
 
 type Item = {
@@ -306,18 +297,6 @@ const ToDoList = () => {
           })}
         </Table>
       </TableContainer>
-      <LogoutContainer>
-        <button
-          onClick={() => dispatch(deleteCookie())}
-          style={{
-            marginRight: "30px",
-            marginBottom: "20px",
-            marginTop: "10px"
-          }}
-        >
-          Log Out
-        </button>
-      </LogoutContainer>
     </ToDoListItemsBox>
   );
 };
