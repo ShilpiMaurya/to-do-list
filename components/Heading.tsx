@@ -11,7 +11,7 @@ const HeadingContainer = styled.div`
 
 const HeadingBox = styled.div`
   padding-top: 30px;
-  padding-bottom: 20px;
+  padding-bottom: 30px;
   color: #fff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
   font-weight: 500;

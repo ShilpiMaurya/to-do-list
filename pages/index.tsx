@@ -14,18 +14,29 @@ const Container = styled.div`
 
 const Box = styled.div`
   height: 70%;
-  width: 70vw;
+  width: 60vw;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   box-shadow: 10px 10px -20px rgba(0, 0, 0, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   border-left: 1px solid rgba(255, 255, 255, 0.2);
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media (max-width: 1024px) {
+    height: 78%;
+    width: 70vw;
+  }
+  @media (max-width: 768px) {
+    height: 80%;
+    width: 95vw;
+  }
+  @media (max-width: 480px) {
+    height: 90%;
+  }
 `;
 
 const Home = () => {

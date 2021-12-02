@@ -37,7 +37,7 @@ const LoginLayout = styled.div`
 const ModalTitleBox = styled.div`
   color: var(--modal-secondary-color);
   font-size: 30px;
-  font-weight: 100;
+  font-weight: 300;
   padding-bottom: 10px;
 `;
 
@@ -179,7 +179,7 @@ const LoginComponent = () => {
     <>
       <button
         onClick={handleOnButtonClick}
-        style={{ fontSize: "20px", padding: "10px" }}
+        style={{ fontSize: "18px", padding: "10px" }}
       >
         Login
       </button>
