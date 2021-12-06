@@ -211,7 +211,9 @@ export const deleteTaskRequest = (uniqueId: string) => {
 export const deleteCookie = () => {
   return () => {
     const url = `/api/logout`;
-    axios.get(url);
+    axios
+      .get(url)
+      .then(response => response.status === 200 && location.reload());
   };
 };
 
