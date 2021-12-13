@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ToDoListItems from "../components/ToDoListItems";
+import Head from "next/head";
 
 const Container = styled.div`
   display: flex;
@@ -41,11 +42,17 @@ const Box = styled.div`
 
 const Home = () => {
   return (
-    <Container>
-      <Box>
-        <ToDoListItems />
-      </Box>
-    </Container>
+    <>
+      <Head>
+        <title>to-do-list-app</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <Container>
+        <Box>
+          <ToDoListItems />
+        </Box>
+      </Container>
+    </>
   );
 };
 
