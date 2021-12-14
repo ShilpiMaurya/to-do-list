@@ -5,10 +5,13 @@ App-link: https://to-do-list.shilpimaurya.com/
 - New users can signup and create account with their email address and password
 <img width="448" alt="Screen Shot 2021-12-14 at 11 25 55" src="https://user-images.githubusercontent.com/47273243/145941892-495bfebc-34df-4166-abfe-ae2e09423320.png">
 
-- Already signed up users can continue with by loggin with their email and password
+- Already signed up users can continue by logging with their email and password
 <img width="449" alt="Screen Shot 2021-12-14 at 11 26 10" src="https://user-images.githubusercontent.com/47273243/145941912-1ac20cfa-1026-413a-b8dd-b97f21b31254.png">
 
-- For adding a task, click on create new task and type your task info
+- You will be redirected to to-do-list app home page, where you can add tasks and see your previous added tasks
+<img width="1190" alt="Screen Shot 2021-12-14 at 21 32 37" src="https://user-images.githubusercontent.com/47273243/146035236-24f38e09-0e81-47ce-b845-c8f26e066ddf.png">
+
+- For adding a new task, click on create new task and type your task info
 <img width="1099" alt="Screen Shot 2021-12-14 at 11 27 59" src="https://user-images.githubusercontent.com/47273243/145941919-768af93c-ed76-4f04-bdee-643453d6936f.png">
 
 - Your task will be added in the task list
